@@ -1,0 +1,47 @@
+# Dependencies and node modules (if any are added later)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Build outputs (if build tools are added later)
+dist/
+build/
+*.min.js
+*.min.css
+
+# Browser cache and local storage
+*.cache
+
+# Backup files
+*.bak
+*.backup
+*.orig
+
+# Audio files (placeholder - remove if you add actual sound files)
+sounds/*.mp3
+sounds/*.wav
+sounds/*.ogg
+!sounds/.gitkeep

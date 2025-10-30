@@ -1,0 +1,17 @@
+# Sounds Directory
+
+This directory is for Halloween game sound effects and background music.
+
+## Recommended Audio Files:
+- `spooky-background.mp3` - Background music (optional)
+- `success.mp3` - Success sound effect
+- `click.mp3` - Button click sound
+- `error.mp3` - Error feedback sound
+
+## Audio Format Support:
+- MP3 (recommended for compatibility)
+- WAV (higher quality, larger files)
+- OGG (good compression, modern browsers)
+
+## Usage:
+Audio files are optional. The game works perfectly without them, but they enhance the spooky atmosphere!

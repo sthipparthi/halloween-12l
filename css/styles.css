@@ -1,0 +1,1329 @@
+/* Halloween 12 Levels Game Styles */
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Griffy', cursive;
+    background: linear-gradient(135deg, #1a0033, #330066, #4a0080);
+    color: #fff;
+    overflow-x: hidden;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Animated Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 48, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 0, 150, 0.2) 0%, transparent 50%);
+    z-index: -2;
+    animation: backgroundShift 20s ease-in-out infinite alternate;
+}
+
+/* Spooky animated background overlay */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(255, 20, 147, 0.1) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(75, 0, 130, 0.1) 0%, transparent 35%);
+    z-index: -1;
+    animation: spookyGlow 15s ease-in-out infinite alternate;
+}
+
+@keyframes spookyGlow {
+    0% { 
+        opacity: 0.3;
+        transform: scale(1) rotate(0deg);
+        filter: hue-rotate(0deg);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.1) rotate(2deg);
+        filter: hue-rotate(30deg);
+    }
+    100% { 
+        opacity: 0.4;
+        transform: scale(0.9) rotate(-1deg);
+        filter: hue-rotate(-20deg);
+    }
+}
+
+@keyframes backgroundShift {
+    0% { transform: scale(1) rotate(0deg); }
+    100% { transform: scale(1.1) rotate(5deg); }
+}
+
+/* Floating Halloween Elements */
+.floating-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Multiple floating spooky elements */
+.floating-pumpkin {
+    position: absolute;
+    bottom: 20%;
+    right: 25%;
+    font-size: 1.5rem;
+    opacity: 0.5;
+    animation: pumpkinGlow 10s ease-in-out infinite alternate;
+}
+
+.floating-pumpkin::before {
+    content: '🎃';
+    filter: drop-shadow(0 0 8px rgba(255, 140, 0, 0.6));
+}
+
+.floating-witch {
+    position: absolute;
+    top: 30%;
+    left: 5%;
+    font-size: 1.8rem;
+    opacity: 0.4;
+    animation: witchFly 20s linear infinite;
+}
+
+.floating-witch::before {
+    content: '🧙‍♀️';
+}
+
+.floating-candy {
+    position: absolute;
+    top: 60%;
+    right: 5%;
+    font-size: 1.2rem;
+    opacity: 0.6;
+    animation: candyBounce 8s ease-in-out infinite;
+}
+
+.floating-candy::before {
+    content: '🍬🍭';
+    letter-spacing: 5px;
+}
+
+@keyframes pumpkinGlow {
+    0% { 
+        transform: scale(1) rotate(0deg);
+        filter: drop-shadow(0 0 8px rgba(255, 140, 0, 0.4));
+    }
+    100% { 
+        transform: scale(1.1) rotate(5deg);
+        filter: drop-shadow(0 0 15px rgba(255, 140, 0, 0.8));
+    }
+}
+
+@keyframes witchFly {
+    0% { transform: translateX(-100px) translateY(0px); }
+    25% { transform: translateX(25vw) translateY(-20px); }
+    50% { transform: translateX(50vw) translateY(10px); }
+    75% { transform: translateX(75vw) translateY(-10px); }
+    100% { transform: translateX(calc(100vw + 100px)) translateY(0px); }
+}
+
+@keyframes candyBounce {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-15px) rotate(5deg); }
+    50% { transform: translateY(-5px) rotate(-3deg); }
+    75% { transform: translateY(-10px) rotate(2deg); }
+}
+
+.floating-bat, .floating-ghost, .floating-spider {
+    position: absolute;
+    font-size: 2rem;
+    opacity: 0.6;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.floating-bat {
+    top: 10%;
+    left: 10%;
+    animation: float1 15s ease-in-out infinite;
+}
+
+.floating-bat::before {
+    content: '🦇';
+    animation: flap 2s ease-in-out infinite;
+}
+
+.floating-ghost {
+    top: 20%;
+    right: 15%;
+    animation: float2 12s ease-in-out infinite;
+}
+
+.floating-ghost::before {
+    content: '👻';
+    animation: ghostBob 3s ease-in-out infinite;
+}
+
+.floating-spider {
+    bottom: 30%;
+    left: 20%;
+    animation: float3 18s ease-in-out infinite;
+}
+
+.floating-spider::before {
+    content: '🕷️';
+    animation: spiderSwing 4s ease-in-out infinite;
+}
+
+/* Spooky particles */
+.spooky-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    font-size: 1rem;
+    opacity: 0.3;
+    animation: particleFloat 15s linear infinite;
+}
+
+.particle:nth-child(1) {
+    left: 10%;
+    animation-delay: 0s;
+    animation-duration: 12s;
+}
+
+.particle:nth-child(2) {
+    left: 20%;
+    animation-delay: -2s;
+    animation-duration: 15s;
+}
+
+.particle:nth-child(3) {
+    left: 30%;
+    animation-delay: -4s;
+    animation-duration: 13s;
+}
+
+.particle:nth-child(4) {
+    left: 40%;
+    animation-delay: -6s;
+    animation-duration: 14s;
+}
+
+.particle:nth-child(5) {
+    left: 50%;
+    animation-delay: -8s;
+    animation-duration: 16s;
+}
+
+.particle:nth-child(6) {
+    left: 60%;
+    animation-delay: -10s;
+    animation-duration: 11s;
+}
+
+.particle:nth-child(7) {
+    left: 70%;
+    animation-delay: -12s;
+    animation-duration: 17s;
+}
+
+.particle:nth-child(8) {
+    left: 80%;
+    animation-delay: -14s;
+    animation-duration: 12s;
+}
+
+@keyframes particleFloat {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.3;
+    }
+    90% {
+        opacity: 0.3;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Additional spooky floating elements */
+.floating-elements::after {
+    content: '🌙';
+    position: absolute;
+    top: 5%;
+    right: 10%;
+    font-size: 3rem;
+    opacity: 0.4;
+    animation: moonGlow 8s ease-in-out infinite alternate;
+}
+
+.floating-elements::before {
+    content: '⭐✨🌟';
+    position: absolute;
+    top: 15%;
+    left: 70%;
+    font-size: 1rem;
+    opacity: 0.7;
+    letter-spacing: 10px;
+    animation: twinkle 6s ease-in-out infinite;
+}
+
+@keyframes float1 {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-20px) rotate(5deg); }
+    66% { transform: translateY(10px) rotate(-3deg); }
+}
+
+@keyframes float2 {
+    0%, 100% { transform: translateX(0px) scale(1); }
+    50% { transform: translateX(30px) scale(1.1); }
+}
+
+@keyframes float3 {
+    0%, 100% { transform: translateY(0px) translateX(0px); }
+    25% { transform: translateY(-15px) translateX(10px); }
+    75% { transform: translateY(15px) translateX(-10px); }
+}
+
+@keyframes flap {
+    0%, 100% { transform: scaleX(1); }
+    50% { transform: scaleX(1.2); }
+}
+
+@keyframes ghostBob {
+    0%, 100% { transform: translateY(0px) scale(1); opacity: 0.6; }
+    50% { transform: translateY(-10px) scale(1.05); opacity: 0.8; }
+}
+
+@keyframes spiderSwing {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+@keyframes moonGlow {
+    0% { 
+        opacity: 0.3; 
+        filter: brightness(1) drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+    }
+    100% { 
+        opacity: 0.7; 
+        filter: brightness(1.2) drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+    }
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    25% { opacity: 0.8; transform: scale(1.1); }
+    50% { opacity: 0.6; transform: scale(0.9); }
+    75% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Spooky fog effect */
+.spooky-fog {
+    position: fixed;
+    bottom: -50px;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(to top, 
+        rgba(138, 43, 226, 0.3) 0%, 
+        rgba(75, 0, 130, 0.2) 30%, 
+        transparent 100%);
+    z-index: 1;
+    animation: fogDrift 25s ease-in-out infinite alternate;
+    pointer-events: none;
+}
+
+@keyframes fogDrift {
+    0% { transform: translateX(-20px) scale(1); opacity: 0.3; }
+    50% { transform: translateX(10px) scale(1.1); opacity: 0.5; }
+    100% { transform: translateX(20px) scale(0.9); opacity: 0.2; }
+}
+
+/* Lightning flash effect */
+.lightning-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 0;
+    opacity: 0;
+    pointer-events: none;
+    animation: lightning 30s infinite;
+}
+
+@keyframes lightning {
+    0%, 10%, 20%, 30%, 40%, 50%, 60%, 70%, 80%, 90%, 100% { opacity: 0; }
+    15% { opacity: 0.3; }
+    16% { opacity: 0; }
+    17% { opacity: 0.7; }
+    18% { opacity: 0; }
+    19% { opacity: 0.4; }
+}
+
+/* Game Container */
+.game-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+/* Screen Management */
+.screen {
+    display: none;
+    min-height: calc(100vh - 40px);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.screen.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Welcome Screen */
+.welcome-content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.game-title {
+    font-family: 'Creepster', cursive;
+    font-size: 4rem;
+    margin-bottom: 20px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.game-title:hover {
+    animation: glow 2s ease-in-out infinite alternate, creepyPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 3px 3px 6px rgba(255, 119, 48, 0.5), 0 0 20px rgba(255, 119, 48, 0.3); }
+    to { text-shadow: 3px 3px 6px rgba(255, 0, 150, 0.5), 0 0 30px rgba(255, 0, 150, 0.4); }
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    color: #ffcc00;
+}
+
+.name-input-section {
+    margin: 40px 0;
+}
+
+.name-input-section label {
+    display: block;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: #ff6b35;
+}
+
+#playerName {
+    padding: 15px 20px;
+    font-size: 1.2rem;
+    border: 3px solid #ff6b35;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+    font-family: 'Griffy', cursive;
+}
+
+#playerName:focus {
+    outline: none;
+    border-color: #ffcc00;
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+}
+
+.game-info {
+    margin-top: 40px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.game-info p {
+    margin: 10px 0;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    border-left: 4px solid #ff6b35;
+}
+
+/* Buttons */
+.main-btn, .submit-btn, .next-btn, .retry-btn, .back-btn, .hint-btn, .hint-close-btn {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-family: 'Griffy', cursive;
+    font-weight: bold;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.main-btn {
+    background: linear-gradient(45deg, #ff6b35, #ffcc00);
+    color: #1a0033;
+}
+
+.main-btn.pulse {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(255, 107, 53, 0.6); }
+    100% { transform: scale(1); }
+}
+
+.submit-btn {
+    background: linear-gradient(45deg, #4CAF50, #8BC34A);
+    color: white;
+}
+
+.next-btn {
+    background: linear-gradient(45deg, #2196F3, #03DAC6);
+    color: white;
+}
+
+.retry-btn {
+    background: linear-gradient(45deg, #FF9800, #FFE0B2);
+    color: #1a0033;
+}
+
+.back-btn {
+    background: linear-gradient(45deg, #9C27B0, #E1BEE7);
+    color: white;
+}
+
+.hint-btn {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    color: #1a0033;
+    padding: 10px 20px;
+    font-size: 1rem;
+}
+
+.main-btn:hover, .submit-btn:hover, .next-btn:hover, .retry-btn:hover, .back-btn:hover, .hint-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Level Selection Screen */
+.level-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.level-header h2 {
+    font-family: 'Creepster', cursive;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #ffcc00;
+}
+
+.player-stats {
+    font-size: 1.5rem;
+    color: #ff6b35;
+}
+
+.levels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.level-card {
+    background: rgba(0, 0, 0, 0.4);
+    border: 3px solid;
+    border-radius: 20px;
+    padding: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.level-card.unlocked {
+    border-color: #4CAF50;
+    background: rgba(76, 175, 80, 0.1);
+}
+
+.level-card.locked {
+    border-color: #666;
+    background: rgba(50, 50, 50, 0.3);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.level-card.completed {
+    border-color: #FFD700;
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.level-card:hover.unlocked {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.level-number {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.level-character-name {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #ffcc00;
+}
+
+.level-character-emoji {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.level-best-score {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.lock-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    opacity: 0.3;
+}
+
+/* Game Screen */
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    flex-wrap: wrap;
+}
+
+.level-info, .game-stats {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.current-level, .level-character, .score {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.current-level {
+    color: #ffcc00;
+}
+
+.level-character {
+    color: #ff6b35;
+}
+
+.score {
+    color: #4CAF50;
+}
+
+/* Character Section */
+.character-section {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.character-display {
+    min-width: 150px;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    border: 4px solid #ff6b35;
+    font-size: 4rem;
+    animation: characterBounce 3s ease-in-out infinite;
+}
+
+@keyframes characterBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.character-speech {
+    flex: 1;
+    min-width: 300px;
+}
+
+.speech-bubble {
+    background: rgba(255, 255, 255, 0.95);
+    color: #333;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.speech-bubble::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 30px;
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-right: 20px solid rgba(255, 255, 255, 0.95);
+}
+
+.speech-bubble p {
+    font-size: 1.1rem;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Puzzle Area */
+.puzzle-area {
+    margin-bottom: 30px;
+}
+
+.puzzle-container {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 20px;
+    padding: 30px;
+    min-height: 300px;
+    border: 3px solid #ff6b35;
+}
+
+/* Game Controls */
+.game-controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #fff, #f5f5f5);
+    color: #333;
+    margin: 10% auto;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.modal-content.success {
+    background: linear-gradient(135deg, #4CAF50, #8BC34A);
+    color: white;
+}
+
+.modal-content h3 {
+    font-family: 'Creepster', cursive;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.success-stats {
+    margin: 20px 0;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 2.5rem;
+    }
+    
+    .character-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .character-display {
+        margin-bottom: 20px;
+    }
+    
+    .speech-bubble::before {
+        display: none;
+    }
+    
+    .game-header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .levels-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .game-title {
+        font-size: 2rem;
+    }
+    
+    .main-btn, .submit-btn, .next-btn, .retry-btn, .back-btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+    
+    .character-display {
+        min-width: 120px;
+        min-height: 120px;
+        font-size: 3rem;
+    }
+}
+
+/* Puzzle-Specific Styles */
+.puzzle-grid {
+    display: grid;
+    gap: 10px;
+    margin: 20px auto;
+    max-width: 400px;
+}
+
+.puzzle-item, .draggable-item {
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 3px solid #ff6b35;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+    margin: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.puzzle-item:hover, .draggable-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.puzzle-item.selected {
+    background: #4CAF50;
+    color: white;
+    border-color: #2E7D32;
+}
+
+.puzzle-item.correct {
+    background: #4CAF50;
+    animation: correctAnswer 0.5s ease-out;
+}
+
+.puzzle-item.incorrect {
+    background: #F44336;
+    animation: incorrectAnswer 0.5s ease-out;
+}
+
+@keyframes correctAnswer {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes incorrectAnswer {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* Drop zones for drag and drop puzzles */
+.drop-zone {
+    min-height: 60px;
+    border: 3px dashed #ff6b35;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 10px;
+    padding: 10px;
+    transition: all 0.3s ease;
+    max-width: 200px;
+    flex: 1;
+}
+
+.drop-zone.drag-over {
+    border-color: #4CAF50;
+    background: rgba(76, 175, 80, 0.2);
+}
+
+.drop-zone.filled {
+    border-style: solid;
+    background: rgba(76, 175, 80, 0.1);
+}
+
+/* Memory game cards */
+.memory-card {
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, #ff6b35, #ffcc00);
+    border: 3px solid #333;
+    border-radius: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    transition: all 0.3s ease;
+    transform-style: preserve-3d;
+}
+
+.memory-card.study-mode {
+    border-color: #4CAF50;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+}
+
+.memory-card.flipped {
+    transform: rotateY(180deg);
+}
+
+.memory-card.matched {
+    border-color: #4CAF50;
+    background: linear-gradient(135deg, #4CAF50, #8BC34A);
+    pointer-events: none;
+}
+
+.memory-card.incorrect {
+    border-color: #F44336;
+    background: linear-gradient(135deg, #F44336, #FF5722);
+}
+
+.memory-card .front, .memory-card .back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.memory-card .back {
+    transform: rotateY(180deg);
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+}
+
+.memory-card:hover:not(.matched):not(.flipped) {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Memory game UI */
+.memory-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.memory-stats span:first-child {
+    color: #4CAF50;
+}
+
+.memory-stats span:last-child {
+    color: #FF5722;
+}
+
+.memory-instructions {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.memory-instructions.study-mode {
+    background: rgba(76, 175, 80, 0.1);
+    border: 2px solid #4CAF50;
+    border-left: 6px solid #4CAF50;
+}
+
+.memory-instructions.game-mode {
+    background: rgba(255, 107, 53, 0.1);
+    border: 2px solid #ff6b35;
+    border-left: 6px solid #ff6b35;
+}
+
+.memory-instructions.success {
+    background: rgba(255, 215, 0, 0.2);
+    border: 2px solid #FFD700;
+    border-left: 6px solid #FFD700;
+    animation: successGlow 1s ease-in-out;
+}
+
+@keyframes successGlow {
+    0%, 100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.3); }
+    50% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+}
+
+/* Spooky screen effects */
+.spooky-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.spooky-overlay.success {
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, transparent 70%);
+    animation: successSparkle 2s ease-out;
+}
+
+.spooky-overlay.error {
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.1) 0%, transparent 70%);
+    animation: spookyShake 0.5s ease-out;
+}
+
+@keyframes successSparkle {
+    0% { opacity: 0; transform: scale(0.8); }
+    50% { opacity: 0.8; transform: scale(1.2); }
+    100% { opacity: 0; transform: scale(1); }
+}
+
+@keyframes spookyShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* Creepy text shadow effects */
+.creepy-glow {
+    text-shadow: 
+        0 0 5px currentColor,
+        0 0 10px currentColor,
+        0 0 15px currentColor,
+        0 0 20px #ff6b35,
+        0 0 35px #ff6b35,
+        0 0 40px #ff6b35;
+    animation: creepyPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes creepyPulse {
+    0% { 
+        text-shadow: 
+            0 0 5px currentColor,
+            0 0 10px currentColor,
+            0 0 15px currentColor,
+            0 0 20px #ff6b35,
+            0 0 35px #ff6b35,
+            0 0 40px #ff6b35;
+    }
+    100% { 
+        text-shadow: 
+            0 0 2px currentColor,
+            0 0 5px currentColor,
+            0 0 8px currentColor,
+            0 0 12px #ffcc00,
+            0 0 18px #ffcc00,
+            0 0 25px #ffcc00;
+    }
+}
+
+@keyframes successParticle {
+    0% {
+        opacity: 1;
+        transform: scale(0) translateY(0) rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.5) translateY(-50px) rotate(180deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.5) translateY(-100px) rotate(360deg);
+    }
+}
+
+.memory-instructions p {
+    margin: 5px 0;
+}
+
+.memory-instructions strong {
+    color: #1a0033;
+}
+
+/* Shapes puzzle specific styles */
+.shapes-container {
+    text-align: center;
+}
+
+.shapes-game {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin: 20px 0;
+}
+
+.shapes-to-sort {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    border: 2px solid #ffcc00;
+}
+
+.shapes-to-sort::before {
+    content: "Drag these shapes ⬇️";
+    width: 100%;
+    color: #ffcc00;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.drop-zones {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.zone-label {
+    font-weight: bold;
+    color: #ff6b35;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    padding: 5px;
+    background: rgba(255, 107, 53, 0.1);
+    border-radius: 8px;
+}
+
+.zone-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+    min-height: 40px;
+    padding: 10px;
+}
+
+.shapes-instructions {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(76, 175, 80, 0.1);
+    border-radius: 10px;
+    border-left: 4px solid #4CAF50;
+}
+
+.shapes-instructions p {
+    margin: 0;
+    color: #4CAF50;
+    font-size: 1.1rem;
+}
+
+/* Enhanced drag and drop interactions */
+.draggable-item.dragging {
+    opacity: 0.7;
+    transform: scale(1.1);
+    z-index: 1000;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.draggable-item.selected {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    border-color: #FF8C00;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+    animation: pulse 1s infinite alternate;
+}
+
+.drop-zone.drag-over {
+    border-color: #4CAF50;
+    background: rgba(76, 175, 80, 0.2);
+    transform: scale(1.02);
+}
+
+.drop-zone.filled .zone-label {
+    color: #4CAF50;
+}
+
+/* Touch-friendly improvements for mobile */
+@media (max-width: 768px) {
+    .draggable-item {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+        margin: 3px;
+    }
+    
+    .shapes-to-sort {
+        padding: 15px;
+        gap: 8px;
+    }
+    
+    .drop-zones {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .drop-zone {
+        max-width: none;
+        min-height: 80px;
+    }
+    
+    .zone-label {
+        font-size: 1.3rem;
+    }
+}
+
+/* Counting puzzle styles */
+.counting-container {
+    text-align: center;
+}
+
+.counting-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.counting-item {
+    font-size: 2.5rem;
+    animation: countingBounce 2s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.2s);
+}
+
+@keyframes countingBounce {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+}
+
+.number-input {
+    padding: 15px 20px;
+    font-size: 2rem;
+    border: 3px solid #ff6b35;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    text-align: center;
+    width: 100px;
+    font-family: 'Griffy', cursive;
+    font-weight: bold;
+}
+
+.number-input:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+}
