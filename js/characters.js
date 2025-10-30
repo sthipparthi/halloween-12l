@@ -22,7 +22,10 @@ class HalloweenCharacters {
                     addition: "Count all the friendly ghosts together!",
                     subtraction: "Some ghosts float away - count how many are left!",
                     missingNumbers: "Help me find the missing spirit numbers!",
-                    missingLetters: "Help me complete these spooky words!"
+                    missingLetters: "Help me complete these spooky words!",
+                    space: "Boo! Let's explore the spooky universe together!",
+                    physics: "Even ghosts follow the laws of physics!",
+                    chemistry: "I may be a spirit, but I know about elements!"
                 },
                 puzzleTypes: ["counting", "addition"]
             },
@@ -42,9 +45,13 @@ class HalloweenCharacters {
                     addition: "Add up my magical ingredients with witch math!",
                     subtraction: "Remove ingredients from my cauldron - count what's left!",
                     missingNumbers: "My spell book has missing numbers - help me find them!",
-                    missingLetters: "Complete these magical incantations!"
+                    missingLetters: "Complete these magical incantations!",
+                    space: "My magic reveals the secrets of the cosmos!",
+                    physics: "Magic and physics are both about forces and energy!",
+                    chemistry: "I brew potions - I know all about mixing elements!",
+                    organicTable: "My spell book contains the secrets of all elements!"
                 },
-                puzzleTypes: ["memory", "counting", "spelling", "missingLetters"]
+                puzzleTypes: ["memory", "counting", "spelling", "missingLetters", "chemistry", "organicTable"]
             },
             {
                 id: 3,
@@ -62,7 +69,10 @@ class HalloweenCharacters {
                     addition: "Add up pumpkin seeds from different pumpkins!",
                     subtraction: "Birds ate some pumpkin seeds - how many are left?",
                     missingNumbers: "Help count the pumpkin patch rows in order!",
-                    missingLetters: "Carve the missing letters into the pumpkin!"
+                    missingLetters: "Carve the missing letters into the pumpkin!",
+                    space: "Pumpkins can grow on Mars with the right conditions!",
+                    physics: "Pumpkins fall from vines due to gravity!",
+                    chemistry: "Pumpkins are made of carbon, hydrogen, and oxygen!"
                 },
                 puzzleTypes: ["pattern", "shapes", "addition", "subtraction"]
             },
@@ -78,7 +88,10 @@ class HalloweenCharacters {
                     pattern: "Even creatures of the night follow patterns!",
                     shapes: "Transform the shapes like I transform at night!",
                     spelling: "Spell words with the speed of the night!",
-                    geography: "I have traveled to many castles across the globe!"
+                    geography: "I have traveled to many castles across the globe!",
+                    space: "I fly through space faster than any rocket!",
+                    physics: "I understand the physics of transformation!",
+                    chemistry: "My centuries of life taught me about elements!"
                 },
                 puzzleTypes: ["memory", "pattern"]
             },
@@ -94,7 +107,10 @@ class HalloweenCharacters {
                     pattern: "Me see pattern... pattern good!",
                     shapes: "Me sort shapes like Dr. sort body parts!",
                     spelling: "Me spell words... me getting better at letters!",
-                    geography: "Dr. Frankenstein travel many places to create me!"
+                    geography: "Dr. Frankenstein travel many places to create me!",
+                    space: "Me wonder about stars and planets!",
+                    physics: "Dr. use electricity to make me - me know physics!",
+                    chemistry: "Me made from different body parts - me know chemistry!"
                 },
                 puzzleTypes: ["shapes", "counting"]
             },
@@ -110,7 +126,10 @@ class HalloweenCharacters {
                     pattern: "I always land on my feet - patterns help!",
                     shapes: "Cats love to play with different shaped toys!",
                     spelling: "Meow out each letter as you spell!",
-                    geography: "Cats are loved in every country in the world!"
+                    geography: "Cats are loved in every country in the world!",
+                    space: "Cats have amazing balance - perfect for space travel!",
+                    physics: "I always land on my feet due to physics laws!",
+                    chemistry: "My purr creates vibrations - that's science!"
                 },
                 puzzleTypes: ["memory", "shapes", "pattern"]
             },
@@ -126,7 +145,10 @@ class HalloweenCharacters {
                     pattern: "My webs follow beautiful patterns!",
                     shapes: "I can make my web into many shapes!",
                     spelling: "Weave letters together like I weave my web!",
-                    geography: "Spiders live on every continent except Antarctica!"
+                    geography: "Spiders live on every continent except Antarctica!",
+                    space: "I could weave webs between the stars!",
+                    physics: "My webs use tension and physics principles!",
+                    chemistry: "My silk is made of amazing protein molecules!"
                 },
                 puzzleTypes: ["pattern", "shapes", "memory"]
             },
@@ -146,9 +168,12 @@ class HalloweenCharacters {
                     addition: "Use owl wisdom to add numbers together!",
                     subtraction: "Wise owls can subtract - take away and count what's left!",
                     missingNumbers: "My owl wisdom helps find missing numbers in sequences!",
-                    missingLetters: "Hoot! Help me complete these wise words!"
+                    missingLetters: "Hoot! Help me complete these wise words!",
+                    space: "Hoot! I fly under the stars and know the cosmos!",
+                    physics: "My flight uses physics - lift, thrust, and drag!",
+                    chemistry: "My sharp eyes can spot chemical reactions!"
                 },
-                puzzleTypes: ["pattern", "memory", "counting", "missingNumbers", "geography"]
+                puzzleTypes: ["pattern", "memory", "counting", "missingNumbers", "geography", "space"]
             },
             {
                 id: 9,
@@ -166,9 +191,12 @@ class HalloweenCharacters {
                     addition: "Add up my dancing moves - bone math is fun!",
                     subtraction: "Some bones broke off - subtract and count what's left!",
                     missingNumbers: "Help me count my dance steps in order!",
-                    missingLetters: "Rattle out the missing letters with me!"
+                    missingLetters: "Rattle out the missing letters with me!",
+                    space: "I rattle like asteroids in space!",
+                    physics: "My bones are levers - that's physics!",
+                    chemistry: "My bones are made of calcium compounds!"
                 },
-                puzzleTypes: ["shapes", "pattern", "memory", "counting", "spelling", "addition", "subtraction"]
+                puzzleTypes: ["shapes", "pattern", "memory", "counting", "spelling", "addition", "subtraction", "physics"]
             },
             {
                 id: 10,
@@ -182,7 +210,10 @@ class HalloweenCharacters {
                     pattern: "I fly in patterns through the sky!",
                     shapes: "My wings make shapes as I fly!",
                     spelling: "Squeak out each letter to spell the word!",
-                    geography: "I've flown over many countries at night!"
+                    geography: "I've flown over many countries at night!",
+                    space: "I use echolocation like space radar!",
+                    physics: "My wings create lift through air pressure!",
+                    chemistry: "I navigate using chemical signals!"
                 },
                 puzzleTypes: ["memory", "pattern", "shapes", "counting", "geography"]
             },
@@ -198,9 +229,13 @@ class HalloweenCharacters {
                     pattern: "Magic follows ancient patterns!",
                     shapes: "Mix different shaped ingredients in my pot!",
                     spelling: "Brew up the letters to create magical words!",
-                    geography: "My magic comes from lands across the world!"
+                    geography: "My magic comes from lands across the world!",
+                    space: "I bubble with cosmic energy from the stars!",
+                    physics: "My bubbling follows thermodynamics laws!",
+                    chemistry: "I'm the perfect vessel for mixing chemicals!",
+                    organicTable: "I bubble with the essence of pure elements!"
                 },
-                puzzleTypes: ["shapes", "memory", "pattern", "counting", "spelling", "geography"]
+                puzzleTypes: ["shapes", "memory", "pattern", "counting", "spelling", "geography", "chemistry", "organicTable"]
             },
             {
                 id: 12,
@@ -218,9 +253,13 @@ class HalloweenCharacters {
                     addition: "Add up all your sweet Halloween candy!",
                     subtraction: "You ate some candy - subtract to see how many are left!",
                     missingNumbers: "Count your candy bags in the right order!",
-                    missingLetters: "Complete these sweet candy words!"
+                    missingLetters: "Complete these sweet candy words!",
+                    space: "I'm as sweet as discovering a new planet!",
+                    physics: "Candy making uses heat and physics principles!",
+                    chemistry: "I'm made of sugar molecules - that's chemistry!",
+                    organicTable: "I'm made of carbon, hydrogen, and oxygen elements!"
                 },
-                puzzleTypes: ["counting", "memory", "pattern", "shapes", "spelling", "geography", "addition", "subtraction", "missingNumbers", "missingLetters"]
+                puzzleTypes: ["counting", "memory", "pattern", "shapes", "spelling", "geography", "addition", "subtraction", "missingNumbers", "missingLetters", "space", "physics", "chemistry", "organicTable"]
             }
         ];
     }
