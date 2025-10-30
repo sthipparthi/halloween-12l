@@ -1843,6 +1843,7 @@ class HalloweenPuzzles {
                         
                         if (emoji1 === emoji2) {
                             // Match found!
+                            this.playCorrectSound(); // Play success sound
                             card1.classList.add('matched');
                             card2.classList.add('matched');
                             puzzle.matchedPairs++;
@@ -1871,6 +1872,7 @@ class HalloweenPuzzles {
                             }
                         } else {
                             // No match - count as failed attempt
+                            this.playIncorrectSound(); // Play try-again sound
                             failedAttempts++;
                             puzzle.failedAttempts = failedAttempts;
                             container.querySelector('#failedAttempts').textContent = failedAttempts;
@@ -2013,7 +2015,8 @@ class HalloweenPuzzles {
                     zone.classList.add('filled');
                     item.classList.remove('dragging');
                     
-                    // Add success animation
+                    // Add success animation and sound
+                    this.playCorrectSound(); // Play success sound for correct placement
                     item.style.animation = 'correctAnswer 0.5s ease-out';
                     setTimeout(() => {
                         item.style.animation = '';
@@ -2041,7 +2044,8 @@ class HalloweenPuzzles {
                     selectedItem.classList.remove('selected');
                     zone.classList.add('filled');
                     
-                    // Success animation
+                    // Success animation and sound
+                    this.playCorrectSound(); // Play success sound for correct placement
                     selectedItem.style.animation = 'correctAnswer 0.5s ease-out';
                     setTimeout(() => {
                         selectedItem.style.animation = '';
@@ -2176,6 +2180,7 @@ class HalloweenPuzzles {
                 options.forEach(opt => opt.disabled = true);
                 
                 if (isCorrect) {
+                    this.playCorrectSound(); // Play happy spooky sound
                     option.classList.add('correct');
                     feedback.innerHTML = `<div class="success">🎉 Correct! That's ${puzzle.country.name}!</div>`;
                     
@@ -2187,6 +2192,7 @@ class HalloweenPuzzles {
                         container.dispatchEvent(event);
                     }, 1000);
                 } else {
+                    this.playIncorrectSound(); // Play gentle try-again sound
                     option.classList.add('incorrect');
                     
                     // Show correct answer
@@ -2222,6 +2228,7 @@ class HalloweenPuzzles {
             ).join('');
             
             if (userWord === puzzle.word) {
+                this.playCorrectSound(); // Play success sound
                 feedback.innerHTML = `<div class="success">🎉 Perfect! You spelled "${puzzle.word}" correctly!</div>`;
                 letterSlots.forEach(slot => {
                     if (slot.textContent) slot.classList.add('correct');
@@ -2238,6 +2245,7 @@ class HalloweenPuzzles {
                     container.dispatchEvent(event);
                 }, 1500);
             } else {
+                this.playIncorrectSound(); // Play try-again sound
                 feedback.innerHTML = `<div class="error">❌ Not quite right. Try again!</div>`;
                 letterSlots.forEach(slot => {
                     if (slot.textContent) slot.classList.add('incorrect');
@@ -2296,6 +2304,7 @@ class HalloweenPuzzles {
                 if (!isNaN(userAnswer) && newMathInput.value.trim() !== '') {
                     if (userAnswer === currentProblem.answer) {
                         hasAnswered = true; // Mark as answered
+                        this.playCorrectSound(); // Play happy spooky sound
                         feedback.innerHTML = `<div class="success">🎉 Correct! ${currentProblem.num1} ${type === 'addition' ? '+' : '-'} ${currentProblem.num2} = ${currentProblem.answer}</div>`;
                         newMathInput.disabled = true;
                         newMathInput.classList.add('correct');
@@ -2313,6 +2322,7 @@ class HalloweenPuzzles {
                             }
                         }, 2000);
                     } else {
+                        this.playIncorrectSound(); // Play gentle try-again sound
                         // Only show hints for significantly wrong answers
                         if (Math.abs(userAnswer - currentProblem.answer) > 5) {
                             feedback.innerHTML = `<div class="error">❌ That seems too ${userAnswer > currentProblem.answer ? 'high' : 'low'}. Try again!</div>`;
@@ -2442,6 +2452,7 @@ class HalloweenPuzzles {
                 options.forEach(opt => opt.disabled = true);
                 
                 if (isCorrect) {
+                    this.playCorrectSound(); // Play success sound
                     option.classList.add('correct');
                     
                     let encouragement = '';
@@ -2454,6 +2465,9 @@ class HalloweenPuzzles {
                             break;
                         case 'chemistry':
                             encouragement = '🧪 Excellent! You\'re a young scientist!';
+                            break;
+                        case 'organicTable':
+                            encouragement = '⚛️ Amazing! You know your elements!';
                             break;
                     }
                     
@@ -2472,6 +2486,7 @@ class HalloweenPuzzles {
                         container.dispatchEvent(event);
                     }, 1000);
                 } else {
+                    this.playIncorrectSound(); // Play try-again sound
                     option.classList.add('incorrect');
                     
                     // Show correct answer
@@ -2490,6 +2505,9 @@ class HalloweenPuzzles {
                             break;
                         case 'chemistry':
                             encouragement = '⚗️ Keep mixing ideas! Discovery takes practice!';
+                            break;
+                        case 'organicTable':
+                            encouragement = '🧪 Keep learning! Elements are everywhere!';
                             break;
                     }
                     
@@ -2614,6 +2632,82 @@ class HalloweenPuzzles {
                 
             default:
                 return "Think carefully and try your best!";
+        }
+    }
+
+    // Kid-friendly spooky sound effects
+    playCorrectSound() {
+        try {
+            // Create audio context if it doesn't exist
+            if (!this.audioContext) {
+                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            // Happy spooky success sound - like friendly ghost chimes
+            const oscillator1 = this.audioContext.createOscillator();
+            const oscillator2 = this.audioContext.createOscillator();
+            const gainNode = this.audioContext.createGain();
+            
+            // Connect nodes
+            oscillator1.connect(gainNode);
+            oscillator2.connect(gainNode);
+            gainNode.connect(this.audioContext.destination);
+            
+            // Set frequencies for a happy magical chord
+            oscillator1.frequency.setValueAtTime(523.25, this.audioContext.currentTime); // C5
+            oscillator2.frequency.setValueAtTime(659.25, this.audioContext.currentTime); // E5
+            
+            // Create a pleasant, magical envelope
+            gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.3, this.audioContext.currentTime + 0.1);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.8);
+            
+            // Add some sparkle with frequency modulation
+            oscillator1.frequency.linearRampToValueAtTime(587.33, this.audioContext.currentTime + 0.2); // D5
+            oscillator2.frequency.linearRampToValueAtTime(783.99, this.audioContext.currentTime + 0.2); // G5
+            
+            oscillator1.type = 'sine';
+            oscillator2.type = 'triangle';
+            
+            oscillator1.start(this.audioContext.currentTime);
+            oscillator2.start(this.audioContext.currentTime);
+            oscillator1.stop(this.audioContext.currentTime + 0.8);
+            oscillator2.stop(this.audioContext.currentTime + 0.8);
+            
+        } catch (e) {
+            console.log('Audio not available:', e);
+        }
+    }
+
+    playIncorrectSound() {
+        try {
+            // Create audio context if it doesn't exist
+            if (!this.audioContext) {
+                this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            // Gentle "try again" sound - like a friendly ghost saying "oops"
+            const oscillator = this.audioContext.createOscillator();
+            const gainNode = this.audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(this.audioContext.destination);
+            
+            // Descending tone that's not scary, just encouraging
+            oscillator.frequency.setValueAtTime(400, this.audioContext.currentTime);
+            oscillator.frequency.linearRampToValueAtTime(300, this.audioContext.currentTime + 0.3);
+            
+            gainNode.gain.setValueAtTime(0, this.audioContext.currentTime);
+            gainNode.gain.linearRampToValueAtTime(0.15, this.audioContext.currentTime + 0.05);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, this.audioContext.currentTime + 0.4);
+            
+            oscillator.type = 'sine'; // Soft, gentle tone
+            
+            oscillator.start(this.audioContext.currentTime);
+            oscillator.stop(this.audioContext.currentTime + 0.4);
+            
+        } catch (e) {
+            console.log('Audio not available:', e);
         }
     }
 }

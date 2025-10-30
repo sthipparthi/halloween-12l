@@ -333,16 +333,424 @@ class SpookySoundManager {
         if (this.sounds.ambient) {
             this.sounds.ambient.gainNode.gain.setValueAtTime(0.1 * this.volume, this.audioContext.currentTime);
         }
+        // Update character ambient volume too
+        if (this.currentCharacterAmbient && this.currentCharacterAmbient.gainNode) {
+            this.currentCharacterAmbient.gainNode.gain.setValueAtTime(0.04 * this.volume, this.audioContext.currentTime);
+        }
     }
 
     toggleMute() {
         this.isMuted = !this.isMuted;
         if (this.isMuted) {
             this.stopAmbientSound();
+            this.stopCharacterAmbient();
         } else {
             this.startAmbientSound();
+            // Note: Character ambient will be restarted by game when needed
         }
         return this.isMuted;
+    }
+
+    // Character-specific background ambient sounds
+    createCharacterAmbientSound(characterName) {
+        if (!this.audioContext) return null;
+
+        const characterAmbients = {
+            'Friendly Ghost': () => this.createGhostAmbient(),
+            'Wise Witch': () => this.createWitchAmbient(),
+            'Happy Pumpkin': () => this.createPumpkinAmbient(),
+            'Spooky Vampire': () => this.createVampireAmbient(),
+            'Funny Frankenstein': () => this.createFrankensteinAmbient(),
+            'Cute Black Cat': () => this.createCatAmbient(),
+            'Silly Spider': () => this.createSpiderAmbient(),
+            'Magical Owl': () => this.createOwlAmbient(),
+            'Dancing Skeleton': () => this.createSkeletonAmbient(),
+            'Friendly Bat': () => this.createBatAmbient(),
+            'Mystical Cauldron': () => this.createCauldronAmbient(),
+            'Halloween Candy': () => this.createCandyAmbient()
+        };
+
+        return characterAmbients[characterName] ? characterAmbients[characterName]() : null;
+    }
+
+    // Individual character ambient sound creators
+    createGhostAmbient() {
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        const filter = this.audioContext.createBiquadFilter();
+
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(220, this.audioContext.currentTime);
+        
+        // Create ethereal floating effect
+        const lfo = this.audioContext.createOscillator();
+        const lfoGain = this.audioContext.createGain();
+        lfo.type = 'sine';
+        lfo.frequency.setValueAtTime(0.3, this.audioContext.currentTime);
+        lfoGain.gain.setValueAtTime(20, this.audioContext.currentTime);
+        
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(800, this.audioContext.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.03, this.audioContext.currentTime);
+
+        lfo.connect(lfoGain);
+        lfoGain.connect(oscillator.frequency);
+        oscillator.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+
+        return { oscillator, lfo, gainNode };
+    }
+
+    createWitchAmbient() {
+        const oscillator1 = this.audioContext.createOscillator();
+        const oscillator2 = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        const filter = this.audioContext.createBiquadFilter();
+
+        oscillator1.type = 'sawtooth';
+        oscillator1.frequency.setValueAtTime(110, this.audioContext.currentTime);
+        oscillator2.type = 'triangle';
+        oscillator2.frequency.setValueAtTime(165, this.audioContext.currentTime);
+        
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(400, this.audioContext.currentTime);
+        filter.Q.setValueAtTime(5, this.audioContext.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.04, this.audioContext.currentTime);
+
+        oscillator1.connect(filter);
+        oscillator2.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+
+        return { oscillator1, oscillator2, gainNode };
+    }
+
+    createPumpkinAmbient() {
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        
+        oscillator.type = 'triangle';
+        oscillator.frequency.setValueAtTime(330, this.audioContext.currentTime);
+        
+        // Happy bouncing effect
+        const lfo = this.audioContext.createOscillator();
+        const lfoGain = this.audioContext.createGain();
+        lfo.type = 'sine';
+        lfo.frequency.setValueAtTime(2, this.audioContext.currentTime);
+        lfoGain.gain.setValueAtTime(50, this.audioContext.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.05, this.audioContext.currentTime);
+
+        lfo.connect(lfoGain);
+        lfoGain.connect(oscillator.frequency);
+        oscillator.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+
+        return { oscillator, lfo, gainNode };
+    }
+
+    createVampireAmbient() {
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        const filter = this.audioContext.createBiquadFilter();
+
+        oscillator.type = 'sawtooth';
+        oscillator.frequency.setValueAtTime(130, this.audioContext.currentTime);
+        
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(300, this.audioContext.currentTime);
+        
+        // Dark mysterious modulation
+        const lfo = this.audioContext.createOscillator();
+        const lfoGain = this.audioContext.createGain();
+        lfo.type = 'triangle';
+        lfo.frequency.setValueAtTime(0.1, this.audioContext.currentTime);
+        lfoGain.gain.setValueAtTime(30, this.audioContext.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.035, this.audioContext.currentTime);
+
+        lfo.connect(lfoGain);
+        lfoGain.connect(filter.frequency);
+        oscillator.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+
+        return { oscillator, lfo, gainNode };
+    }
+
+    createFrankensteinAmbient() {
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        
+        oscillator.type = 'square';
+        oscillator.frequency.setValueAtTime(87, this.audioContext.currentTime);
+        
+        // Heavy, mechanical rhythm
+        const tremolo = this.audioContext.createOscillator();
+        const tremoloGain = this.audioContext.createGain();
+        tremolo.type = 'square';
+        tremolo.frequency.setValueAtTime(1.5, this.audioContext.currentTime);
+        tremoloGain.gain.setValueAtTime(0.02, this.audioContext.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.04, this.audioContext.currentTime);
+
+        tremolo.connect(tremoloGain);
+        tremoloGain.connect(gainNode.gain);
+        oscillator.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+
+        return { oscillator, tremolo, gainNode };
+    }
+
+    createCatAmbient() {
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        const filter = this.audioContext.createBiquadFilter();
+
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(440, this.audioContext.currentTime);
+        
+        filter.type = 'highpass';
+        filter.frequency.setValueAtTime(200, this.audioContext.currentTime);
+        
+        // Gentle purring effect
+        const purr = this.audioContext.createOscillator();
+        const purrGain = this.audioContext.createGain();
+        purr.type = 'sine';
+        purr.frequency.setValueAtTime(25, this.audioContext.currentTime);
+        purrGain.gain.setValueAtTime(15, this.audioContext.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.03, this.audioContext.currentTime);
+
+        purr.connect(purrGain);
+        purrGain.connect(oscillator.frequency);
+        oscillator.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+
+        return { oscillator, purr, gainNode };
+    }
+
+    createSpiderAmbient() {
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        const filter = this.audioContext.createBiquadFilter();
+
+        oscillator.type = 'triangle';
+        oscillator.frequency.setValueAtTime(523, this.audioContext.currentTime);
+        
+        filter.type = 'bandpass';
+        filter.frequency.setValueAtTime(1000, this.audioContext.currentTime);
+        filter.Q.setValueAtTime(10, this.audioContext.currentTime);
+        
+        // Web-like trembling effect
+        const web = this.audioContext.createOscillator();
+        const webGain = this.audioContext.createGain();
+        web.type = 'sine';
+        web.frequency.setValueAtTime(8, this.audioContext.currentTime);
+        webGain.gain.setValueAtTime(100, this.audioContext.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.025, this.audioContext.currentTime);
+
+        web.connect(webGain);
+        webGain.connect(filter.frequency);
+        oscillator.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+
+        return { oscillator, web, gainNode };
+    }
+
+    createOwlAmbient() {
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        const filter = this.audioContext.createBiquadFilter();
+
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(294, this.audioContext.currentTime);
+        
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(600, this.audioContext.currentTime);
+        
+        // Wise hooting rhythm
+        const hoot = this.audioContext.createOscillator();
+        const hootGain = this.audioContext.createGain();
+        hoot.type = 'sine';
+        hoot.frequency.setValueAtTime(0.4, this.audioContext.currentTime);
+        hootGain.gain.setValueAtTime(0.02, this.audioContext.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.04, this.audioContext.currentTime);
+
+        hoot.connect(hootGain);
+        hootGain.connect(gainNode.gain);
+        oscillator.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+
+        return { oscillator, hoot, gainNode };
+    }
+
+    createSkeletonAmbient() {
+        const oscillator1 = this.audioContext.createOscillator();
+        const oscillator2 = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+
+        oscillator1.type = 'square';
+        oscillator1.frequency.setValueAtTime(220, this.audioContext.currentTime);
+        oscillator2.type = 'triangle';
+        oscillator2.frequency.setValueAtTime(110, this.audioContext.currentTime);
+        
+        // Rattling bone rhythm
+        const rattle = this.audioContext.createOscillator();
+        const rattleGain = this.audioContext.createGain();
+        rattle.type = 'sawtooth';
+        rattle.frequency.setValueAtTime(3, this.audioContext.currentTime);
+        rattleGain.gain.setValueAtTime(0.015, this.audioContext.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.03, this.audioContext.currentTime);
+
+        rattle.connect(rattleGain);
+        rattleGain.connect(gainNode.gain);
+        oscillator1.connect(gainNode);
+        oscillator2.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+
+        return { oscillator1, oscillator2, rattle, gainNode };
+    }
+
+    createBatAmbient() {
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        const filter = this.audioContext.createBiquadFilter();
+
+        oscillator.type = 'sawtooth';
+        oscillator.frequency.setValueAtTime(880, this.audioContext.currentTime);
+        
+        filter.type = 'highpass';
+        filter.frequency.setValueAtTime(500, this.audioContext.currentTime);
+        
+        // Echolocation effect
+        const echo = this.audioContext.createOscillator();
+        const echoGain = this.audioContext.createGain();
+        echo.type = 'sine';
+        echo.frequency.setValueAtTime(4, this.audioContext.currentTime);
+        echoGain.gain.setValueAtTime(200, this.audioContext.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.02, this.audioContext.currentTime);
+
+        echo.connect(echoGain);
+        echoGain.connect(oscillator.frequency);
+        oscillator.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+
+        return { oscillator, echo, gainNode };
+    }
+
+    createCauldronAmbient() {
+        const oscillator1 = this.audioContext.createOscillator();
+        const oscillator2 = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        const filter = this.audioContext.createBiquadFilter();
+
+        oscillator1.type = 'sine';
+        oscillator1.frequency.setValueAtTime(165, this.audioContext.currentTime);
+        oscillator2.type = 'triangle';
+        oscillator2.frequency.setValueAtTime(220, this.audioContext.currentTime);
+        
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(400, this.audioContext.currentTime);
+        
+        // Bubbling effect
+        const bubble = this.audioContext.createOscillator();
+        const bubbleGain = this.audioContext.createGain();
+        bubble.type = 'sine';
+        bubble.frequency.setValueAtTime(6, this.audioContext.currentTime);
+        bubbleGain.gain.setValueAtTime(30, this.audioContext.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.04, this.audioContext.currentTime);
+
+        bubble.connect(bubbleGain);
+        bubbleGain.connect(filter.frequency);
+        oscillator1.connect(filter);
+        oscillator2.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+
+        return { oscillator1, oscillator2, bubble, gainNode };
+    }
+
+    createCandyAmbient() {
+        const oscillator = this.audioContext.createOscillator();
+        const gainNode = this.audioContext.createGain();
+        const filter = this.audioContext.createBiquadFilter();
+
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(523, this.audioContext.currentTime);
+        
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(1200, this.audioContext.currentTime);
+        
+        // Sweet twinkling effect
+        const twinkle = this.audioContext.createOscillator();
+        const twinkleGain = this.audioContext.createGain();
+        twinkle.type = 'sine';
+        twinkle.frequency.setValueAtTime(5, this.audioContext.currentTime);
+        twinkleGain.gain.setValueAtTime(150, this.audioContext.currentTime);
+        
+        gainNode.gain.setValueAtTime(0.05, this.audioContext.currentTime);
+
+        twinkle.connect(twinkleGain);
+        twinkleGain.connect(oscillator.frequency);
+        oscillator.connect(filter);
+        filter.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+
+        return { oscillator, twinkle, gainNode };
+    }
+
+    // Character-specific sound management
+    startCharacterAmbient(characterName) {
+        this.stopCharacterAmbient(); // Stop any existing character ambient
+        
+        if (this.isMuted) return;
+        
+        this.currentCharacterAmbient = this.createCharacterAmbientSound(characterName);
+        
+        if (this.currentCharacterAmbient) {
+            try {
+                // Start all oscillators in the character ambient
+                Object.keys(this.currentCharacterAmbient).forEach(key => {
+                    if (this.currentCharacterAmbient[key] && 
+                        this.currentCharacterAmbient[key].start && 
+                        key !== 'gainNode') {
+                        this.currentCharacterAmbient[key].start();
+                    }
+                });
+            } catch (e) {
+                console.log('Character ambient already started or error:', e);
+            }
+        }
+    }
+
+    stopCharacterAmbient() {
+        if (this.currentCharacterAmbient) {
+            try {
+                Object.keys(this.currentCharacterAmbient).forEach(key => {
+                    if (this.currentCharacterAmbient[key] && 
+                        this.currentCharacterAmbient[key].stop && 
+                        key !== 'gainNode') {
+                        this.currentCharacterAmbient[key].stop();
+                    }
+                });
+            } catch (e) {
+                console.log('Character ambient already stopped or error:', e);
+            }
+            this.currentCharacterAmbient = null;
+        }
     }
 
     // Character-specific sounds

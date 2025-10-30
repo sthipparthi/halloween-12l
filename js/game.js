@@ -157,6 +157,9 @@ class HalloweenGame {
     }
 
     showLevelSelection() {
+        // Stop any character ambient sounds when returning to level selection
+        this.stopCharacterAmbientSound();
+        
         this.showScreen('level');
         document.getElementById('playerNameDisplay').textContent = this.gameState.playerName;
         document.getElementById('totalScore').textContent = this.gameState.totalScore;
@@ -214,8 +217,14 @@ class HalloweenGame {
     startLevel(level) {
         const character = this.characters.getCharacter(level);
         
+        // Stop any existing character ambient sound
+        this.stopCharacterAmbientSound();
+        
         // Play level start sound
         this.playSound('levelStart');
+        
+        // Start character-specific background ambient sound
+        this.startCharacterAmbientSound(character.name);
         
         // Update UI
         document.getElementById('currentLevel').textContent = level;
@@ -474,6 +483,18 @@ class HalloweenGame {
         if (characterSoundFunc) {
             setTimeout(characterSoundFunc, 300); // Delay for character introduction
         }
+    }
+
+    startCharacterAmbientSound(characterName) {
+        if (!this.gameState.soundEnabled || !this.soundManager) return;
+        
+        this.soundManager.startCharacterAmbient(characterName);
+    }
+
+    stopCharacterAmbientSound() {
+        if (!this.soundManager) return;
+        
+        this.soundManager.stopCharacterAmbient();
     }
 
     // Data Persistence
