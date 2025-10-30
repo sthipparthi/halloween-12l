@@ -16,9 +16,15 @@ class HalloweenCharacters {
                     counting: "Look carefully at each item and count them one by one!",
                     memory: "Try to remember where you saw the matching pictures!",
                     pattern: "Look for what comes next in the sequence!",
-                    shapes: "Look at the shapes and colors - what matches?"
+                    shapes: "Look at the shapes and colors - what matches?",
+                    spelling: "Sound out each letter - what letter comes first?",
+                    geography: "Look at the colors and patterns of this flag!",
+                    addition: "Count all the friendly ghosts together!",
+                    subtraction: "Some ghosts float away - count how many are left!",
+                    missingNumbers: "Help me find the missing spirit numbers!",
+                    missingLetters: "Help me complete these spooky words!"
                 },
-                puzzleTypes: ["counting"]
+                puzzleTypes: ["counting", "addition"]
             },
             {
                 id: 2,
@@ -30,9 +36,15 @@ class HalloweenCharacters {
                     counting: "Cast a counting spell - point at each item as you count!",
                     memory: "Use your memory magic to remember the pairs!",
                     pattern: "My crystal ball shows the pattern - what comes next?",
-                    shapes: "Mix the right shapes in your magical cauldron!"
+                    shapes: "Mix the right shapes in your magical cauldron!",
+                    spelling: "Cast a spelling spell - arrange the magical letters!",
+                    geography: "My magical knowledge tells me about this land!",
+                    addition: "Add up my magical ingredients with witch math!",
+                    subtraction: "Remove ingredients from my cauldron - count what's left!",
+                    missingNumbers: "My spell book has missing numbers - help me find them!",
+                    missingLetters: "Complete these magical incantations!"
                 },
-                puzzleTypes: ["memory", "counting"]
+                puzzleTypes: ["memory", "counting", "spelling", "missingLetters"]
             },
             {
                 id: 3,
@@ -44,9 +56,15 @@ class HalloweenCharacters {
                     counting: "Count like you're counting pumpkin seeds!",
                     memory: "Remember the pumpkin pairs like seeds in a pod!",
                     pattern: "Pumpkins grow in patterns - can you see it?",
-                    shapes: "Sort the shapes like sorting different pumpkins!"
+                    shapes: "Sort the shapes like sorting different pumpkins!",
+                    spelling: "Carve letters like carving a pumpkin face!",
+                    geography: "Pumpkins grow in many countries around the world!",
+                    addition: "Add up pumpkin seeds from different pumpkins!",
+                    subtraction: "Birds ate some pumpkin seeds - how many are left?",
+                    missingNumbers: "Help count the pumpkin patch rows in order!",
+                    missingLetters: "Carve the missing letters into the pumpkin!"
                 },
-                puzzleTypes: ["pattern", "shapes"]
+                puzzleTypes: ["pattern", "shapes", "addition", "subtraction"]
             },
             {
                 id: 4,
@@ -58,7 +76,9 @@ class HalloweenCharacters {
                     counting: "Count like you're counting bat friends!",
                     memory: "Use your vampire memory - it's very good!",
                     pattern: "Even creatures of the night follow patterns!",
-                    shapes: "Transform the shapes like I transform at night!"
+                    shapes: "Transform the shapes like I transform at night!",
+                    spelling: "Spell words with the speed of the night!",
+                    geography: "I have traveled to many castles across the globe!"
                 },
                 puzzleTypes: ["memory", "pattern"]
             },
@@ -72,7 +92,9 @@ class HalloweenCharacters {
                     counting: "Me count on fingers - you count too!",
                     memory: "Me have good memory in big brain!",
                     pattern: "Me see pattern... pattern good!",
-                    shapes: "Me sort shapes like Dr. sort body parts!"
+                    shapes: "Me sort shapes like Dr. sort body parts!",
+                    spelling: "Me spell words... me getting better at letters!",
+                    geography: "Dr. Frankenstein travel many places to create me!"
                 },
                 puzzleTypes: ["shapes", "counting"]
             },
@@ -86,7 +108,9 @@ class HalloweenCharacters {
                     counting: "Count like you're counting my nine lives!",
                     memory: "Cats have great memory - follow my lead!",
                     pattern: "I always land on my feet - patterns help!",
-                    shapes: "Cats love to play with different shaped toys!"
+                    shapes: "Cats love to play with different shaped toys!",
+                    spelling: "Meow out each letter as you spell!",
+                    geography: "Cats are loved in every country in the world!"
                 },
                 puzzleTypes: ["memory", "shapes", "pattern"]
             },
@@ -100,7 +124,9 @@ class HalloweenCharacters {
                     counting: "Count like counting the legs I have!",
                     memory: "I remember every strand of my web!",
                     pattern: "My webs follow beautiful patterns!",
-                    shapes: "I can make my web into many shapes!"
+                    shapes: "I can make my web into many shapes!",
+                    spelling: "Weave letters together like I weave my web!",
+                    geography: "Spiders live on every continent except Antarctica!"
                 },
                 puzzleTypes: ["pattern", "shapes", "memory"]
             },
@@ -114,9 +140,15 @@ class HalloweenCharacters {
                     counting: "Hoot once for each item you count!",
                     memory: "Owls have excellent memory - trust yours!",
                     pattern: "Look with owl eyes to see the pattern!",
-                    shapes: "Sort shapes like I sort my feathers!"
+                    shapes: "Sort shapes like I sort my feathers!",
+                    spelling: "Hoot out each letter with wise precision!",
+                    geography: "I fly over many countries in my nighttime journeys!",
+                    addition: "Use owl wisdom to add numbers together!",
+                    subtraction: "Wise owls can subtract - take away and count what's left!",
+                    missingNumbers: "My owl wisdom helps find missing numbers in sequences!",
+                    missingLetters: "Hoot! Help me complete these wise words!"
                 },
-                puzzleTypes: ["pattern", "memory", "counting"]
+                puzzleTypes: ["pattern", "memory", "counting", "missingNumbers", "geography"]
             },
             {
                 id: 9,
@@ -128,9 +160,15 @@ class HalloweenCharacters {
                     counting: "Count my 206 bones... just kidding, count the puzzle items!",
                     memory: "Even without a brain, I remember well!",
                     pattern: "My dance follows a pattern - can you find yours?",
-                    shapes: "My bones fit together like puzzle shapes!"
+                    shapes: "My bones fit together like puzzle shapes!",
+                    spelling: "Rattle those letters like my bones!",
+                    geography: "I've traveled the world as a dancing skeleton!",
+                    addition: "Add up my dancing moves - bone math is fun!",
+                    subtraction: "Some bones broke off - subtract and count what's left!",
+                    missingNumbers: "Help me count my dance steps in order!",
+                    missingLetters: "Rattle out the missing letters with me!"
                 },
-                puzzleTypes: ["shapes", "pattern", "memory", "counting"]
+                puzzleTypes: ["shapes", "pattern", "memory", "counting", "spelling", "addition", "subtraction"]
             },
             {
                 id: 10,
@@ -142,9 +180,11 @@ class HalloweenCharacters {
                     counting: "Count like you're counting my colony friends!",
                     memory: "I navigate by memory - use yours too!",
                     pattern: "I fly in patterns through the sky!",
-                    shapes: "My wings make shapes as I fly!"
+                    shapes: "My wings make shapes as I fly!",
+                    spelling: "Squeak out each letter to spell the word!",
+                    geography: "I've flown over many countries at night!"
                 },
-                puzzleTypes: ["memory", "pattern", "shapes", "counting"]
+                puzzleTypes: ["memory", "pattern", "shapes", "counting", "geography"]
             },
             {
                 id: 11,
@@ -156,9 +196,11 @@ class HalloweenCharacters {
                     counting: "Count the ingredients in my magical recipe!",
                     memory: "Remember the spell ingredients like a true wizard!",
                     pattern: "Magic follows ancient patterns!",
-                    shapes: "Mix different shaped ingredients in my pot!"
+                    shapes: "Mix different shaped ingredients in my pot!",
+                    spelling: "Brew up the letters to create magical words!",
+                    geography: "My magic comes from lands across the world!"
                 },
-                puzzleTypes: ["shapes", "memory", "pattern", "counting"]
+                puzzleTypes: ["shapes", "memory", "pattern", "counting", "spelling", "geography"]
             },
             {
                 id: 12,
@@ -170,9 +212,15 @@ class HalloweenCharacters {
                     counting: "Count me like counting trick-or-treat candy!",
                     memory: "Remember where you found the best candy!",
                     pattern: "Candy comes in delicious patterns!",
-                    shapes: "I come in many sweet shapes and colors!"
+                    shapes: "I come in many sweet shapes and colors!",
+                    spelling: "Spell words as sweet as candy!",
+                    geography: "I'm enjoyed by children all around the world!",
+                    addition: "Add up all your sweet Halloween candy!",
+                    subtraction: "You ate some candy - subtract to see how many are left!",
+                    missingNumbers: "Count your candy bags in the right order!",
+                    missingLetters: "Complete these sweet candy words!"
                 },
-                puzzleTypes: ["counting", "memory", "pattern", "shapes"]
+                puzzleTypes: ["counting", "memory", "pattern", "shapes", "spelling", "geography", "addition", "subtraction", "missingNumbers", "missingLetters"]
             }
         ];
     }

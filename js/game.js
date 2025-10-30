@@ -3,6 +3,7 @@ class HalloweenGame {
     constructor() {
         this.characters = new HalloweenCharacters();
         this.puzzles = new HalloweenPuzzles();
+        this.soundManager = null;
         this.gameState = {
             playerName: '',
             currentLevel: 1,
@@ -21,15 +22,55 @@ class HalloweenGame {
 
     init() {
         this.loadGameData();
+        this.initializeSoundSystem();
         this.setupEventListeners();
         this.showScreen('welcome');
-        this.playBackgroundMusic();
+        this.playWelcomeSound();
+    }
+
+    initializeSoundSystem() {
+        try {
+            this.soundManager = new SpookySoundManager();
+            this.setupSoundControls();
+            
+            // Play ambient sound after user interaction
+            document.addEventListener('click', () => {
+                if (this.soundManager && this.gameState.soundEnabled) {
+                    this.soundManager.startAmbientSound();
+                }
+            }, { once: true });
+            
+        } catch (e) {
+            console.log('Sound system initialization failed:', e);
+        }
+    }
+
+    setupSoundControls() {
+        const soundToggle = document.getElementById('soundToggle');
+        const volumeSlider = document.getElementById('volumeSlider');
+        
+        if (soundToggle) {
+            soundToggle.addEventListener('click', () => {
+                this.gameState.soundEnabled = this.soundManager.toggleMute();
+                soundToggle.textContent = this.gameState.soundEnabled ? '🔊' : '🔇';
+                soundToggle.classList.toggle('muted', !this.gameState.soundEnabled);
+                this.saveGameData();
+            });
+        }
+        
+        if (volumeSlider) {
+            volumeSlider.addEventListener('input', (e) => {
+                const volume = e.target.value / 100;
+                this.soundManager.setVolume(volume);
+            });
+        }
     }
 
     // Event Listeners Setup
     setupEventListeners() {
         // Welcome screen
         document.getElementById('startGameBtn').addEventListener('click', () => {
+            this.playSound('click');
             const nameInput = document.getElementById('playerName');
             if (nameInput.value.trim()) {
                 this.gameState.playerName = nameInput.value.trim();
@@ -51,23 +92,28 @@ class HalloweenGame {
         });
 
         document.getElementById('submitAnswer').addEventListener('click', () => {
+            this.playSound('click');
             this.checkPuzzleAnswer();
         });
 
         document.getElementById('retryLevel').addEventListener('click', () => {
+            this.playSound('click');
             this.retryCurrentLevel();
         });
 
         document.getElementById('backToLevels').addEventListener('click', () => {
+            this.playSound('click');
             this.showLevelSelection();
         });
 
         // Modal controls
         document.getElementById('nextLevelBtn').addEventListener('click', () => {
+            this.playSound('click');
             this.goToNextLevel();
         });
 
         document.getElementById('playAgainBtn').addEventListener('click', () => {
+            this.playSound('click');
             this.retryCurrentLevel();
             this.hideModal('successModal');
         });
@@ -142,7 +188,9 @@ class HalloweenGame {
             if (isUnlocked) {
                 levelCard.addEventListener('click', () => {
                     this.playSound('click');
-                    this.showGameScreen(level);
+                    setTimeout(() => {
+                        this.showGameScreen(level);
+                    }, 100); // Small delay for sound feedback
                 });
             }
 
@@ -166,6 +214,9 @@ class HalloweenGame {
     startLevel(level) {
         const character = this.characters.getCharacter(level);
         
+        // Play level start sound
+        this.playSound('levelStart');
+        
         // Update UI
         document.getElementById('currentLevel').textContent = level;
         document.getElementById('currentCharacter').textContent = character.name;
@@ -175,9 +226,12 @@ class HalloweenGame {
         const characterDisplay = document.getElementById('characterDisplay');
         this.characters.displayCharacter(level, characterDisplay);
         
-        // Character welcome message
+        // Character welcome message with sound
         const speechElement = document.getElementById('characterMessage');
         this.characters.speakCharacter(level, null, speechElement);
+        
+        // Play character-specific sound
+        this.playCharacterSound(character.name);
         
         // Generate and display puzzle
         this.generateNewPuzzle(level, false);
@@ -233,7 +287,20 @@ class HalloweenGame {
         }
         
         this.saveGameData();
-        this.playSound('success');
+        
+        // Play celebration sounds based on completion
+        if (level === this.maxLevel) {
+            this.playSound('gameComplete');
+        } else {
+            this.playSound('levelComplete');
+        }
+        
+        // Play character celebration sound
+        const character = this.characters.getCharacter(level);
+        setTimeout(() => {
+            this.playCharacterSound(character.name);
+        }, 800);
+        
         this.triggerSpookyEffect('success');
         this.showSuccessModal(baseScore);
     }
@@ -351,6 +418,9 @@ class HalloweenGame {
 
     // Hint System
     showHint() {
+        // Play hint sound
+        this.playSound('hint');
+        
         const puzzleHint = this.puzzles.getHint(this.gameState.currentPuzzle);
         const characterHint = this.characters.getCharacterHint(
             this.gameState.currentLevel,
@@ -380,34 +450,45 @@ class HalloweenGame {
 
     // Sound Management
     playSound(soundType) {
-        if (!this.gameState.soundEnabled) return;
-        
-        const audio = document.getElementById(soundType + 'Sound');
-        if (audio) {
-            audio.currentTime = 0;
-            audio.play().catch(e => console.log('Sound play failed:', e));
-        }
+        if (!this.gameState.soundEnabled || !this.soundManager) return;
+        this.soundManager.playSound(soundType);
     }
 
-    playBackgroundMusic() {
-        if (!this.gameState.soundEnabled) return;
+    playWelcomeSound() {
+        if (!this.gameState.soundEnabled || !this.soundManager) return;
         
-        const music = document.getElementById('backgroundMusic');
-        if (music) {
-            music.volume = 0.3;
-            music.play().catch(e => console.log('Background music failed:', e));
+        // Play a magical welcome sound
+        setTimeout(() => {
+            this.soundManager.playSound('ghostWhisper');
+        }, 500);
+        
+        setTimeout(() => {
+            this.soundManager.playSound('success');
+        }, 1000);
+    }
+
+    playCharacterSound(characterName) {
+        if (!this.gameState.soundEnabled || !this.soundManager) return;
+        
+        const characterSoundFunc = this.soundManager.getCharacterSound(characterName);
+        if (characterSoundFunc) {
+            setTimeout(characterSoundFunc, 300); // Delay for character introduction
         }
     }
 
     // Data Persistence
     saveGameData() {
         try {
+            const volumeSlider = document.getElementById('volumeSlider');
+            const volume = volumeSlider ? volumeSlider.value / 100 : 0.5;
+            
             localStorage.setItem('halloween12levels', JSON.stringify({
                 playerName: this.gameState.playerName,
                 totalScore: this.gameState.totalScore,
                 completedLevels: this.gameState.completedLevels,
                 levelScores: this.gameState.levelScores,
-                soundEnabled: this.gameState.soundEnabled
+                soundEnabled: this.gameState.soundEnabled,
+                volume: volume
             }));
         } catch (e) {
             console.log('Could not save game data:', e);
@@ -424,6 +505,21 @@ class HalloweenGame {
                 this.gameState.completedLevels = data.completedLevels || [];
                 this.gameState.levelScores = data.levelScores || {};
                 this.gameState.soundEnabled = data.soundEnabled !== false;
+                
+                // Update sound control UI
+                setTimeout(() => {
+                    const soundToggle = document.getElementById('soundToggle');
+                    const volumeSlider = document.getElementById('volumeSlider');
+                    
+                    if (soundToggle) {
+                        soundToggle.textContent = this.gameState.soundEnabled ? '🔊' : '🔇';
+                        soundToggle.classList.toggle('muted', !this.gameState.soundEnabled);
+                    }
+                    
+                    if (volumeSlider && data.volume !== undefined) {
+                        volumeSlider.value = data.volume * 100;
+                    }
+                }, 100);
                 
                 // Pre-fill player name if available
                 if (this.gameState.playerName) {

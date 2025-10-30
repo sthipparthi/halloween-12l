@@ -37,6 +37,12 @@
         <div class="floating-candy"></div>
     </div>
 
+    <!-- Sound Controls -->
+    <div class="sound-controls">
+        <button id="soundToggle" class="sound-btn" title="Toggle Sound">🔊</button>
+        <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="50" title="Volume Control">
+    </div>
+
     <!-- Main Game Container -->
     <div id="gameContainer" class="game-container">
         <!-- Welcome Screen -->
@@ -152,6 +158,7 @@
         <source src="sounds/click.mp3" type="audio/mpeg">
     </audio>
 
+    <script src="js/sounds.js"></script>
     <script src="js/characters.js"></script>
     <script src="js/puzzles.js"></script>
     <script src="js/game.js"></script>
