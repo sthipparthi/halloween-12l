@@ -2193,40 +2193,16 @@ class HalloweenPuzzles {
         
         options.forEach(option => {
             option.addEventListener('click', (e) => {
-                const isCorrect = option.dataset.correct === 'true';
+                // Remove selection from all options
+                options.forEach(opt => {
+                    opt.classList.remove('selected');
+                });
                 
-                // Disable all options
-                options.forEach(opt => opt.disabled = true);
+                // Mark this option as selected
+                option.classList.add('selected');
                 
-                if (isCorrect) {
-                    this.playCorrectSound(); // Play happy spooky sound
-                    option.classList.add('correct');
-                    feedback.innerHTML = `<div class="success">🎉 Correct! That's ${puzzle.country.name}!</div>`;
-                    
-                    // Trigger completion after a short delay
-                    setTimeout(() => {
-                        const event = new CustomEvent('puzzleComplete', { 
-                            detail: { puzzle: puzzle, success: true } 
-                        });
-                        container.dispatchEvent(event);
-                    }, 1000);
-                } else {
-                    this.playIncorrectSound(); // Play gentle try-again sound
-                    option.classList.add('incorrect');
-                    
-                    // Show correct answer
-                    const correctOption = Array.from(options).find(opt => opt.dataset.correct === 'true');
-                    correctOption.classList.add('correct');
-                    
-                    feedback.innerHTML = `<div class="error">❌ Not quite! The correct answer is ${puzzle.country.name}.</div>`;
-                    
-                    setTimeout(() => {
-                        const event = new CustomEvent('puzzleComplete', { 
-                            detail: { puzzle: puzzle, success: false } 
-                        });
-                        container.dispatchEvent(event);
-                    }, 2000);
-                }
+                // Clear any previous feedback
+                feedback.innerHTML = '';
             });
         });
     }
@@ -2377,40 +2353,31 @@ class HalloweenPuzzles {
         const inputs = container.querySelectorAll('.missing-input');
         const feedback = container.querySelector('.missing-feedback');
         
+        // Enable submit button for missing numbers puzzle
+        const submitBtn = document.getElementById('submitAnswer');
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.style.display = 'block';
+        }
+        
         inputs.forEach((input, index) => {
             input.addEventListener('input', () => {
                 const value = parseInt(input.value);
                 const expectedPosition = puzzle.missingPositions[index];
-                const expectedValue = puzzle.sequence[expectedPosition];
                 
                 if (!isNaN(value)) {
                     puzzle.userAnswers[index] = value;
-                    
-                    if (value === expectedValue) {
-                        input.classList.add('correct');
-                        input.classList.remove('incorrect');
-                    } else {
-                        input.classList.add('incorrect');
-                        input.classList.remove('correct');
-                    }
-                    
-                    // Check if all answers are correct
-                    const allCorrect = puzzle.userAnswers.every((answer, i) => 
-                        answer === puzzle.sequence[puzzle.missingPositions[i]]
-                    );
-                    
-                    if (allCorrect && puzzle.userAnswers.every(answer => answer !== null)) {
-                        feedback.innerHTML = `<div class="success">🎉 Perfect! You found all the missing numbers!</div>`;
-                        inputs.forEach(inp => inp.disabled = true);
-                        
-                        setTimeout(() => {
-                            const event = new CustomEvent('puzzleComplete', { 
-                                detail: { puzzle: puzzle, success: true } 
-                            });
-                            container.dispatchEvent(event);
-                        }, 2000);
-                    }
+                } else {
+                    puzzle.userAnswers[index] = null;
                 }
+                
+                // Clear any previous feedback
+                feedback.innerHTML = '';
+                
+                // Remove any previous styling
+                inputs.forEach(inp => {
+                    inp.classList.remove('correct', 'incorrect');
+                });
             });
         });
     }
@@ -2599,17 +2566,58 @@ class HalloweenPuzzles {
                 return userWord === puzzle.word;
                 
             case 'geography':
-                // Geography puzzles are completed through event listeners
-                return false;
+                // Check if user has selected the correct country
+                const selectedCountryOption = document.querySelector('.country-option.selected');
+                return selectedCountryOption && selectedCountryOption.dataset.correct === 'true';
                 
             case 'addition':
             case 'subtraction':
                 return puzzle.currentProblem >= puzzle.problems.length;
                 
             case 'missingNumbers':
-                return puzzle.userAnswers.every((answer, i) => 
-                    answer === puzzle.sequence[puzzle.missingPositions[i]]
-                );
+                // Check if all answers are filled and correct
+                if (puzzle.userAnswers.every(answer => answer !== null && answer !== undefined)) {
+                    const isCorrect = puzzle.userAnswers.every((answer, i) => 
+                        answer === puzzle.sequence[puzzle.missingPositions[i]]
+                    );
+                    
+                    // Provide visual feedback
+                    const inputs = document.querySelectorAll('.missing-input');
+                    const feedback = document.querySelector('.missing-feedback');
+                    
+                    if (isCorrect) {
+                        inputs.forEach((input, i) => {
+                            input.classList.add('correct');
+                            input.classList.remove('incorrect');
+                        });
+                        if (feedback) {
+                            feedback.innerHTML = `<div class="success">🎉 Perfect! You found all the missing numbers!</div>`;
+                        }
+                    } else {
+                        inputs.forEach((input, i) => {
+                            const expectedValue = puzzle.sequence[puzzle.missingPositions[i]];
+                            if (puzzle.userAnswers[i] === expectedValue) {
+                                input.classList.add('correct');
+                                input.classList.remove('incorrect');
+                            } else {
+                                input.classList.add('incorrect');
+                                input.classList.remove('correct');
+                            }
+                        });
+                        if (feedback) {
+                            feedback.innerHTML = `<div class="error">❌ Some numbers are incorrect. Try again!</div>`;
+                        }
+                    }
+                    
+                    return isCorrect;
+                } else {
+                    // Not all answers filled
+                    const feedback = document.querySelector('.missing-feedback');
+                    if (feedback) {
+                        feedback.innerHTML = `<div class="error">⚠️ Please fill in all missing numbers before submitting.</div>`;
+                    }
+                    return false;
+                }
                 
             case 'missingLetters':
                 return puzzle.userAnswers.every((answer, i) => 
@@ -2651,7 +2659,7 @@ class HalloweenPuzzles {
                 return `Sound out each letter in "${puzzle.hint}". What letter comes first? Drag the letters to spell the word!`;
                 
             case 'geography':
-                return `Look at the colors and patterns of the flag. ${puzzle.hint} Which country do you think it is?`;
+                return `Look at the colors and patterns of the flag. ${puzzle.hint} Click on a country to select it, then press Submit Answer!`;
                 
             case 'addition':
                 return `Count all the items together! Add the first group to the second group.`;
