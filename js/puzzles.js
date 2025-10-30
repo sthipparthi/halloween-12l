@@ -363,39 +363,61 @@ class HalloweenPuzzles {
     }
 
     generateAdditionPuzzle(difficulty, seed) {
-        let maxNumber, problemCount;
+        let problemSets, problemCount;
         
+        // Define diverse problem sets for each difficulty
         switch(difficulty) {
             case 'easy':
-                maxNumber = 5;
+                problemSets = [
+                    [1, 1], [1, 2], [1, 3], [1, 4], [2, 1], [2, 2], [2, 3], 
+                    [3, 1], [3, 2], [4, 1], [0, 1], [0, 2], [0, 3], [5, 0]
+                ];
                 problemCount = 1;
                 break;
             case 'medium':
-                maxNumber = 10;
+                problemSets = [
+                    [3, 4], [4, 3], [5, 2], [2, 5], [6, 1], [1, 6], [4, 4],
+                    [3, 5], [5, 3], [2, 6], [6, 2], [7, 1], [1, 7], [4, 5],
+                    [5, 4], [3, 6], [6, 3], [2, 7], [7, 2], [8, 1], [1, 8],
+                    [6, 4], [4, 6], [5, 5], [7, 3], [3, 7], [8, 2], [2, 8]
+                ];
                 problemCount = 2;
                 break;
             case 'hard':
-                maxNumber = 20;
+                problemSets = [
+                    [7, 5], [5, 7], [8, 4], [4, 8], [9, 3], [3, 9], [6, 6],
+                    [7, 6], [6, 7], [8, 5], [5, 8], [9, 4], [4, 9], [7, 7],
+                    [8, 6], [6, 8], [9, 5], [5, 9], [8, 7], [7, 8], [9, 6],
+                    [6, 9], [8, 8], [9, 7], [7, 9], [9, 8], [8, 9], [9, 9],
+                    [12, 3], [3, 12], [11, 4], [4, 11], [10, 5], [5, 10]
+                ];
                 problemCount = 3;
                 break;
             default:
-                maxNumber = 5;
+                problemSets = [[1, 1], [1, 2], [2, 1]];
                 problemCount = 1;
         }
         
         const problems = [];
+        const visualEmojis = ['🍎', '🍊', '🍓', '🍇', '🍌', '🥕', '🍒', '🥝'];
+        
         for (let i = 0; i < problemCount; i++) {
-            const num1 = Math.floor((seed * (i + 1) * 7) % maxNumber) + 1;
-            const num2 = Math.floor((seed * (i + 2) * 11) % maxNumber) + 1;
+            // Select a problem from the appropriate set
+            const problemIndex = Math.floor((seed * (i + 1) * 13) % problemSets.length);
+            const [num1, num2] = problemSets[problemIndex];
             const answer = num1 + num2;
+            
+            // Select different emojis for variety
+            const emoji1 = visualEmojis[Math.floor((seed * (i + 1) * 7) % visualEmojis.length)];
+            const emoji2 = visualEmojis[Math.floor((seed * (i + 2) * 11) % visualEmojis.length)];
             
             problems.push({
                 num1: num1,
                 num2: num2,
                 answer: answer,
                 userAnswer: null,
-                visualItems1: '🍎'.repeat(num1),
-                visualItems2: '🍊'.repeat(num2)
+                visualItems1: emoji1.repeat(num1),
+                visualItems2: emoji2.repeat(num2)
             });
         }
         
@@ -408,39 +430,65 @@ class HalloweenPuzzles {
     }
 
     generateSubtractionPuzzle(difficulty, seed) {
-        let maxNumber, problemCount;
+        let problemSets, problemCount;
         
+        // Define diverse subtraction problem sets for each difficulty
         switch(difficulty) {
             case 'easy':
-                maxNumber = 5;
+                problemSets = [
+                    [2, 1], [3, 1], [3, 2], [4, 1], [4, 2], [4, 3], 
+                    [5, 1], [5, 2], [5, 3], [5, 4], [1, 0], [2, 0], 
+                    [3, 0], [4, 0], [5, 0]
+                ];
                 problemCount = 1;
                 break;
             case 'medium':
-                maxNumber = 10;
+                problemSets = [
+                    [6, 1], [6, 2], [6, 3], [6, 4], [6, 5], [7, 1], [7, 2], 
+                    [7, 3], [7, 4], [7, 5], [7, 6], [8, 1], [8, 2], [8, 3],
+                    [8, 4], [8, 5], [8, 6], [8, 7], [9, 1], [9, 2], [9, 3],
+                    [9, 4], [9, 5], [9, 6], [9, 7], [9, 8], [10, 1], [10, 2],
+                    [10, 3], [10, 4], [10, 5], [10, 6], [10, 7], [10, 8], [10, 9]
+                ];
                 problemCount = 2;
                 break;
             case 'hard':
-                maxNumber = 15;
+                problemSets = [
+                    [11, 2], [11, 3], [11, 4], [11, 5], [11, 6], [11, 7], [11, 8], [11, 9],
+                    [12, 3], [12, 4], [12, 5], [12, 6], [12, 7], [12, 8], [12, 9],
+                    [13, 4], [13, 5], [13, 6], [13, 7], [13, 8], [13, 9],
+                    [14, 5], [14, 6], [14, 7], [14, 8], [14, 9],
+                    [15, 6], [15, 7], [15, 8], [15, 9],
+                    [16, 7], [16, 8], [16, 9], [17, 8], [17, 9], [18, 9],
+                    [20, 5], [20, 10], [15, 10], [12, 6]
+                ];
                 problemCount = 3;
                 break;
             default:
-                maxNumber = 5;
+                problemSets = [[2, 1], [3, 1], [3, 2]];
                 problemCount = 1;
         }
         
         const problems = [];
+        const visualEmojis = ['🟢', '🔵', '🟡', '🟣', '🟠', '⚫', '🔴', '⚪'];
+        
         for (let i = 0; i < problemCount; i++) {
-            const num1 = Math.floor((seed * (i + 1) * 7) % maxNumber) + 3; // Ensure num1 is at least 3
-            const num2 = Math.floor((seed * (i + 2) * 11) % (num1 - 1)) + 1; // Ensure num2 < num1
+            // Select a problem from the appropriate set
+            const problemIndex = Math.floor((seed * (i + 1) * 17) % problemSets.length);
+            const [num1, num2] = problemSets[problemIndex];
             const answer = num1 - num2;
+            
+            // Select emoji for variety
+            const emoji = visualEmojis[Math.floor((seed * (i + 1) * 5) % visualEmojis.length)];
             
             problems.push({
                 num1: num1,
                 num2: num2,
                 answer: answer,
                 userAnswer: null,
-                visualItems: '🟢'.repeat(num1),
-                removeItems: num2
+                visualItems: emoji.repeat(num1),
+                removeItems: num2,
+                emoji: emoji
             });
         }
         
@@ -718,7 +766,7 @@ class HalloweenPuzzles {
                 <h3>🌍 Which country does this flag belong to?</h3>
                 <div class="geography-game">
                     <div class="flag-display">
-                        <div class="country-flag">${puzzle.flag}</div>
+                        <div class="country-flag">${puzzle.flag || '🏳️'}</div>
                         <div class="country-hint">${puzzle.hint}</div>
                     </div>
                     <div class="country-options">
@@ -742,10 +790,14 @@ class HalloweenPuzzles {
         const currentProblem = puzzle.problems[puzzle.currentProblem];
         const problemNumber = puzzle.currentProblem + 1;
         const totalProblems = puzzle.problems.length;
+        const difficultyLabel = puzzle.difficulty.charAt(0).toUpperCase() + puzzle.difficulty.slice(1);
         
         container.innerHTML = `
             <div class="math-container">
-                <h3>🧮 Addition Time! (${problemNumber}/${totalProblems})</h3>
+                <h3>🧮 Addition Time! (${problemNumber}/${totalProblems}) - ${difficultyLabel}</h3>
+                <div class="math-instruction">
+                    <p>Count all the items together!</p>
+                </div>
                 <div class="math-problem">
                     <div class="visual-math">
                         <div class="math-group">
@@ -762,6 +814,10 @@ class HalloweenPuzzles {
                             <input type="number" class="math-input" min="0" max="50" placeholder="?">
                         </div>
                     </div>
+                    ${currentProblem.num1 === 0 || currentProblem.num2 === 0 ? 
+                        '<div class="math-hint">💡 Adding zero means the number stays the same!</div>' : 
+                        '<div class="math-hint">💡 Count the first group, then count the second group, then add them!</div>'
+                    }
                 </div>
                 <div class="math-feedback"></div>
             </div>
@@ -775,8 +831,10 @@ class HalloweenPuzzles {
         const problemNumber = puzzle.currentProblem + 1;
         const totalProblems = puzzle.problems.length;
         
-        const crossedOut = '❌'.repeat(currentProblem.removeItems);
-        const remaining = currentProblem.visualItems.substring(0, currentProblem.answer);
+        // Create visual representation: show all items, then cross out some
+        const allItems = '🟢'.repeat(currentProblem.num1);
+        const remainingItems = '🟢'.repeat(currentProblem.answer);
+        const crossedItems = '❌'.repeat(currentProblem.num2);
         
         container.innerHTML = `
             <div class="math-container">
@@ -784,12 +842,12 @@ class HalloweenPuzzles {
                 <div class="math-problem">
                     <div class="visual-math">
                         <div class="math-group">
-                            <div class="math-items">${currentProblem.visualItems}</div>
+                            <div class="math-items">${allItems}</div>
                             <div class="math-number">${currentProblem.num1}</div>
                         </div>
                         <div class="math-operator">-</div>
                         <div class="math-group">
-                            <div class="math-items">${crossedOut}</div>
+                            <div class="math-items subtract-items">Take away ${currentProblem.num2}</div>
                             <div class="math-number">${currentProblem.num2}</div>
                         </div>
                         <div class="math-equals">=</div>
@@ -798,8 +856,12 @@ class HalloweenPuzzles {
                         </div>
                     </div>
                     <div class="subtraction-visual">
-                        <p>Cross out ${currentProblem.num2} items:</p>
-                        <div class="remaining-items">${remaining}${crossedOut}</div>
+                        <p>📝 Start with ${currentProblem.num1} items, cross out ${currentProblem.num2}:</p>
+                        <div class="visual-demonstration">
+                            <div class="items-before">Before: ${allItems}</div>
+                            <div class="items-crossed">After crossing out: ${remainingItems}${crossedItems}</div>
+                            <div class="items-result">Items left: <strong>${currentProblem.answer}</strong></div>
+                        </div>
                     </div>
                 </div>
                 <div class="math-feedback"></div>

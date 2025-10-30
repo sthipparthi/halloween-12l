@@ -1793,18 +1793,48 @@ body::after {
 
 .subtraction-visual {
     margin-top: 20px;
-    padding: 15px;
+    padding: 20px;
     background: rgba(244, 67, 54, 0.1);
-    border-radius: 10px;
+    border-radius: 15px;
     border: 2px dashed #f44336;
+    text-align: center;
 }
 
-.remaining-items {
-    font-size: 1.8rem;
-    margin: 10px 0;
+.visual-demonstration {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.items-before, .items-crossed, .items-result {
     padding: 10px;
-    background: rgba(255, 255, 255, 0.1);
     border-radius: 8px;
+    font-size: 1.4rem;
+}
+
+.items-before {
+    background: rgba(76, 175, 80, 0.2);
+    border: 1px solid #4CAF50;
+}
+
+.items-crossed {
+    background: rgba(255, 152, 0, 0.2);
+    border: 1px solid #ff9800;
+    font-size: 1.6rem;
+}
+
+.items-result {
+    background: rgba(33, 150, 243, 0.2);
+    border: 1px solid #2196F3;
+    font-weight: bold;
+    color: #1976D2;
+}
+
+.subtract-items {
+    font-size: 1rem;
+    color: #f44336;
+    font-weight: bold;
 }
 
 .math-feedback {
@@ -1813,6 +1843,68 @@ body::after {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.math-instruction {
+    margin: 15px 0;
+    padding: 10px;
+    background: rgba(255, 235, 59, 0.2);
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.math-hint {
+    margin-top: 15px;
+    padding: 8px 15px;
+    background: rgba(76, 175, 80, 0.2);
+    border-left: 4px solid #4CAF50;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.subtraction-visual {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(244, 67, 54, 0.1);
+    border-radius: 10px;
+    border: 2px dashed #f44336;
+}
+
+.subtraction-explanation {
+    text-align: left;
+}
+
+.subtraction-explanation .step {
+    margin: 8px 0;
+    padding: 5px 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.crossed-out {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.answer-highlight {
+    background: rgba(255, 235, 59, 0.5);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.visual-demonstration {
+    margin-top: 10px;
+}
+
+.items-before, .items-crossed, .items-result {
+    margin: 5px 0;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
 }
 
 /* Missing Numbers Puzzle Styles */
