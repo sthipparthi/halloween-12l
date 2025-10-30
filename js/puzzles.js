@@ -1564,10 +1564,18 @@ class HalloweenPuzzles {
                     </div>
                 </div>
                 <div class="shapes-instructions">
-                    <p>💡 <strong>Tip:</strong> Drag each shape to its matching group above!</p>
+                    <p>💡 <strong>Tip:</strong> Drag each shape to its matching group above, then press Submit Answer!</p>
                 </div>
             </div>
         `;
+        
+        // Initially disable the submit button
+        const submitBtn = document.getElementById('submitAnswer');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.style.background = 'linear-gradient(45deg, #666, #999)';
+            submitBtn.style.cursor = 'not-allowed';
+        }
         
         this.setupShapesListeners(puzzle, container);
     }
@@ -1636,6 +1644,20 @@ class HalloweenPuzzles {
                 <div class="geography-feedback"></div>
             </div>
         `;
+        
+        // Configure submit button for geography puzzle
+        const submitBtn = document.getElementById('submitAnswer');
+        if (submitBtn) {
+            submitBtn.disabled = true; // Disabled until a country is selected
+            submitBtn.style.display = 'block';
+            submitBtn.textContent = 'Submit Answer';
+            
+            // Add instruction to select country then submit
+            const instructionDiv = document.createElement('div');
+            instructionDiv.className = 'geography-instruction';
+            instructionDiv.innerHTML = '<p>🌍 Select a country, then press Submit Answer!</p>';
+            container.querySelector('.geography-container').insertBefore(instructionDiv, container.querySelector('.geography-game'));
+        }
         
         this.setupGeographyListeners(puzzle, container);
     }
@@ -1808,18 +1830,19 @@ class HalloweenPuzzles {
             </div>
         `;
         
-        // Handle submit button for different science puzzle types
+        // Handle submit button for all science puzzle types
         const submitBtn = document.getElementById('submitAnswer');
         if (submitBtn) {
-            if (puzzle.type === 'organicTable') {
-                // Keep submit button enabled for organic table puzzles
-                submitBtn.disabled = false;
-                submitBtn.style.display = 'block';
-            } else {
-                // Disable submit button for other science puzzles that handle completion automatically
-                submitBtn.disabled = true;
-                submitBtn.style.display = 'none';
-            }
+            // All science puzzles now use submit button control
+            submitBtn.disabled = true; // Disabled until an option is selected
+            submitBtn.style.display = 'block';
+            submitBtn.textContent = 'Submit Answer';
+            
+            // Add instruction to click submit button
+            const instructionDiv = document.createElement('div');
+            instructionDiv.className = 'science-instruction';
+            instructionDiv.innerHTML = '<p>🔬 Choose the correct answer, then press Submit Answer!</p>';
+            container.querySelector('.science-container').insertBefore(instructionDiv, container.querySelector('.science-game'));
         }
         
         this.setupScienceListeners(puzzle, container);
@@ -2049,6 +2072,16 @@ class HalloweenPuzzles {
                         if (submitBtn) {
                             submitBtn.disabled = false;
                             submitBtn.style.background = 'linear-gradient(45deg, #4CAF50, #8BC34A)';
+                            submitBtn.style.cursor = 'pointer';
+                            submitBtn.style.animation = 'pulse 1s ease-in-out infinite';
+                            
+                            // Show completion message
+                            const instructionsDiv = container.querySelector('.shapes-instructions');
+                            if (instructionsDiv) {
+                                instructionsDiv.innerHTML = '<p>🎉 <strong>Great job!</strong> All shapes are sorted! Now press Submit Answer to continue!</p>';
+                                instructionsDiv.style.color = '#4CAF50';
+                                instructionsDiv.style.fontWeight = 'bold';
+                            }
                         }
                     }
                 }
@@ -2069,6 +2102,27 @@ class HalloweenPuzzles {
                     setTimeout(() => {
                         selectedItem.style.animation = '';
                     }, 500);
+                    
+                    // Check if all items are placed (same check as drag & drop)
+                    const remainingItems = container.querySelector('.shapes-to-sort').children.length;
+                    if (remainingItems === 0) {
+                        // Enable submit button when all items are placed
+                        const submitBtn = document.getElementById('submitAnswer');
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.style.background = 'linear-gradient(45deg, #4CAF50, #8BC34A)';
+                            submitBtn.style.cursor = 'pointer';
+                            submitBtn.style.animation = 'pulse 1s ease-in-out infinite';
+                            
+                            // Show completion message
+                            const instructionsDiv = container.querySelector('.shapes-instructions');
+                            if (instructionsDiv) {
+                                instructionsDiv.innerHTML = '<p>🎉 <strong>Great job!</strong> All shapes are sorted! Now press Submit Answer to continue!</p>';
+                                instructionsDiv.style.color = '#4CAF50';
+                                instructionsDiv.style.fontWeight = 'bold';
+                            }
+                        }
+                    }
                 }
             });
         });
@@ -2190,6 +2244,7 @@ class HalloweenPuzzles {
     setupGeographyListeners(puzzle, container) {
         const options = container.querySelectorAll('.country-option');
         const feedback = container.querySelector('.geography-feedback');
+        const submitBtn = document.getElementById('submitAnswer');
         
         options.forEach(option => {
             option.addEventListener('click', (e) => {
@@ -2201,10 +2256,77 @@ class HalloweenPuzzles {
                 // Mark this option as selected
                 option.classList.add('selected');
                 
+                // Enable submit button when a country is selected
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.add('pulse');
+                }
+                
                 // Clear any previous feedback
                 feedback.innerHTML = '';
             });
         });
+        
+        // Handle submit button click for geography puzzle
+        if (submitBtn) {
+            // Remove existing listeners to avoid duplicates
+            const newSubmitBtn = submitBtn.cloneNode(true);
+            submitBtn.parentNode.replaceChild(newSubmitBtn, submitBtn);
+            
+            newSubmitBtn.addEventListener('click', () => {
+                const selectedOption = container.querySelector('.country-option.selected');
+                if (!selectedOption) return;
+                
+                const isCorrect = selectedOption.dataset.correct === 'true';
+                
+                // Disable all options and submit button after submission
+                options.forEach(opt => opt.disabled = true);
+                newSubmitBtn.disabled = true;
+                newSubmitBtn.classList.remove('pulse');
+                
+                if (isCorrect) {
+                    this.playCorrectSound();
+                    selectedOption.classList.add('correct');
+                    feedback.innerHTML = `
+                        <div class="success">
+                            🌍 Excellent! That's the flag of ${selectedOption.dataset.country}!
+                            <br>🎉 Great job identifying the country!
+                        </div>
+                    `;
+                    
+                    setTimeout(() => {
+                        const event = new CustomEvent('puzzleComplete', { 
+                            detail: { puzzle: puzzle, success: true } 
+                        });
+                        container.dispatchEvent(event);
+                    }, 1000);
+                } else {
+                    this.playIncorrectSound();
+                    selectedOption.classList.add('incorrect');
+                    
+                    // Show correct answer
+                    const correctOption = Array.from(options).find(opt => opt.dataset.correct === 'true');
+                    if (correctOption) {
+                        correctOption.classList.add('correct');
+                    }
+                    
+                    feedback.innerHTML = `
+                        <div class="error">
+                            ❌ Not quite right, but great try!
+                            <br>🌟 Keep learning about world flags!
+                            <br><strong>The correct answer is:</strong> ${puzzle.country.name}
+                        </div>
+                    `;
+                    
+                    setTimeout(() => {
+                        const event = new CustomEvent('puzzleComplete', { 
+                            detail: { puzzle: puzzle, success: false } 
+                        });
+                        container.dispatchEvent(event);
+                    }, 2500);
+                }
+            });
+        }
     }
 
     checkSpelling(puzzle, container) {
@@ -2429,28 +2551,49 @@ class HalloweenPuzzles {
     setupScienceListeners(puzzle, container) {
         const options = container.querySelectorAll('.science-option');
         const feedback = container.querySelector('.science-feedback');
+        const submitBtn = document.getElementById('submitAnswer');
         
+        // All science puzzles now use submit button pattern
         options.forEach(option => {
             option.addEventListener('click', (e) => {
-                const isCorrect = option.dataset.correct === 'true';
+                // Just mark selection and let submit button handle completion
+                options.forEach(opt => {
+                    opt.classList.remove('selected');
+                    opt.disabled = false; // Keep options enabled so user can change selection
+                });
+                option.classList.add('selected');
                 
-                if (puzzle.type === 'organicTable') {
-                    // For organic table puzzles, just mark selection and let submit button handle completion
-                    options.forEach(opt => {
-                        opt.classList.remove('selected');
-                        opt.disabled = false; // Keep options enabled so user can change selection
-                    });
-                    option.classList.add('selected');
-                    
-                    // Clear any previous feedback
-                    feedback.innerHTML = '';
-                } else {
-                    // For other science puzzles, disable all options and auto-complete
-                    options.forEach(opt => opt.disabled = true);
-                    
-                    if (isCorrect) {
+                // Enable submit button when an option is selected
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.classList.add('pulse');
+                }
+                
+                // Clear any previous feedback
+                feedback.innerHTML = '';
+            });
+        });
+        
+        // Handle submit button click for science puzzles
+        if (submitBtn) {
+            // Remove existing listeners to avoid duplicates
+            const newSubmitBtn = submitBtn.cloneNode(true);
+            submitBtn.parentNode.replaceChild(newSubmitBtn, submitBtn);
+            
+            newSubmitBtn.addEventListener('click', () => {
+                const selectedOption = container.querySelector('.science-option.selected');
+                if (!selectedOption) return;
+                
+                const isCorrect = selectedOption.dataset.correct === 'true';
+                
+                // Disable all options after submission
+                options.forEach(opt => opt.disabled = true);
+                newSubmitBtn.disabled = true;
+                newSubmitBtn.classList.remove('pulse');
+                
+                if (isCorrect) {
                     this.playCorrectSound(); // Play success sound
-                    option.classList.add('correct');
+                    selectedOption.classList.add('correct');
                     
                     let encouragement = '';
                     switch(puzzle.type) {
@@ -2484,7 +2627,7 @@ class HalloweenPuzzles {
                     }, 1000);
                 } else {
                     this.playIncorrectSound(); // Play try-again sound
-                    option.classList.add('incorrect');
+                    selectedOption.classList.add('incorrect');
                     
                     // Show correct answer
                     const correctOption = Array.from(options).find(opt => opt.dataset.correct === 'true');
@@ -2522,10 +2665,9 @@ class HalloweenPuzzles {
                         });
                         container.dispatchEvent(event);
                     }, 2500);
-                    }
                 }
             });
-        });
+        }
     }
 
     // Check if puzzle is solved correctly
@@ -2625,15 +2767,12 @@ class HalloweenPuzzles {
                 );
                 
             case 'organicTable':
-                // Check if user has selected the correct answer for organic table
-                const selectedOption = document.querySelector('.science-option.selected');
-                return selectedOption && selectedOption.dataset.correct === 'true';
-                
             case 'space':
             case 'physics':
             case 'chemistry':
-                // These science puzzles are completed through event listeners
-                return false;
+                // Check if user has selected the correct answer for all science puzzles
+                const selectedOption = document.querySelector('.science-option.selected');
+                return selectedOption && selectedOption.dataset.correct === 'true';
                 
             default:
                 return false;
@@ -2653,7 +2792,7 @@ class HalloweenPuzzles {
                 return `Look at how the sequence repeats: ${puzzle.sequence.slice(0, 3).join(' ')}... What comes next?`;
                 
             case 'shapes':
-                return `Look at the shape and drag it to the group with the same shape. Each shape has its own home!`;
+                return `Look at the shape and drag it to the group with the same shape. Each shape has its own home! Once all shapes are sorted, press Submit Answer!`;
                 
             case 'spelling':
                 return `Sound out each letter in "${puzzle.hint}". What letter comes first? Drag the letters to spell the word!`;
@@ -2672,6 +2811,18 @@ class HalloweenPuzzles {
                 
             case 'missingLetters':
                 return `Think about how "${puzzle.hint}" is spelled. What letters are missing?`;
+                
+            case 'organicTable':
+                return `Think about the periodic table elements! ${puzzle.hint} Choose your answer and press Submit Answer!`;
+                
+            case 'space':
+                return `Think about space and astronomy! ${puzzle.hint} Choose your answer and press Submit Answer!`;
+                
+            case 'physics':
+                return `Think about how things move and work! ${puzzle.hint} Choose your answer and press Submit Answer!`;
+                
+            case 'chemistry':
+                return `Think about how substances mix and change! ${puzzle.hint} Choose your answer and press Submit Answer!`;
                 
             default:
                 return "Think carefully and try your best!";
