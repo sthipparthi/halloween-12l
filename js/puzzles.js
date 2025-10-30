@@ -1121,67 +1121,96 @@ class HalloweenPuzzles {
         const letterSlots = container.querySelectorAll('.letter-slot');
         const feedback = container.querySelector('.spelling-feedback');
         
-        letterTiles.forEach(tile => {
+        // Make tiles draggable and clickable
+        letterTiles.forEach((tile, tileIndex) => {
+            // Add draggable attribute if not already set
+            tile.setAttribute('draggable', 'true');
+            
             tile.addEventListener('dragstart', (e) => {
-                e.dataTransfer.setData('text/plain', e.target.dataset.letter);
-                e.dataTransfer.setData('source', 'tile');
-                e.dataTransfer.setData('index', e.target.dataset.index);
+                e.dataTransfer.setData('text/plain', tile.dataset.letter);
+                e.dataTransfer.setData('tileIndex', tileIndex.toString());
+                tile.classList.add('dragging');
             });
             
+            tile.addEventListener('dragend', () => {
+                tile.classList.remove('dragging');
+            });
+            
+            // Click to place in first available slot
             tile.addEventListener('click', () => {
-                // Find first empty slot and place letter there
-                const emptySlot = Array.from(letterSlots).find(slot => !slot.textContent);
+                if (tile.style.display === 'none') return; // Already used
+                
+                const emptySlot = Array.from(letterSlots).find(slot => 
+                    !slot.textContent || slot.textContent.trim() === ''
+                );
                 if (emptySlot) {
                     emptySlot.textContent = tile.dataset.letter;
                     emptySlot.dataset.filled = 'true';
+                    emptySlot.dataset.sourceTile = tileIndex.toString();
                     tile.style.display = 'none';
                     this.checkSpelling(puzzle, container);
                 }
             });
         });
         
-        letterSlots.forEach((slot, index) => {
+        // Make slots accept drops and clickable to remove
+        letterSlots.forEach((slot, slotIndex) => {
             slot.addEventListener('dragover', (e) => {
                 e.preventDefault();
-                slot.classList.add('drag-over');
+                if (!slot.textContent || slot.textContent.trim() === '') {
+                    slot.classList.add('drag-over');
+                }
             });
             
-            slot.addEventListener('dragleave', () => {
-                slot.classList.remove('drag-over');
+            slot.addEventListener('dragleave', (e) => {
+                // Only remove if we're actually leaving the slot
+                if (!slot.contains(e.relatedTarget)) {
+                    slot.classList.remove('drag-over');
+                }
             });
             
             slot.addEventListener('drop', (e) => {
                 e.preventDefault();
                 slot.classList.remove('drag-over');
                 
-                const letter = e.dataTransfer.getData('text/plain');
-                const sourceIndex = e.dataTransfer.getData('index');
+                // Only drop if slot is empty
+                if (slot.textContent && slot.textContent.trim() !== '') {
+                    return; // Slot already occupied
+                }
                 
-                if (!slot.textContent) {
+                const letter = e.dataTransfer.getData('text/plain');
+                const tileIndex = e.dataTransfer.getData('tileIndex');
+                
+                if (letter && tileIndex) {
                     slot.textContent = letter;
                     slot.dataset.filled = 'true';
+                    slot.dataset.sourceTile = tileIndex;
                     
                     // Hide the source tile
-                    const sourceTile = container.querySelector(`[data-index="${sourceIndex}"]`);
-                    if (sourceTile) sourceTile.style.display = 'none';
+                    const sourceTile = letterTiles[parseInt(tileIndex)];
+                    if (sourceTile) {
+                        sourceTile.style.display = 'none';
+                    }
                     
                     this.checkSpelling(puzzle, container);
                 }
             });
             
+            // Click on slot to remove letter and show tile again
             slot.addEventListener('click', () => {
-                // Remove letter from slot and show tile again
-                if (slot.textContent) {
-                    const letter = slot.textContent;
-                    const tile = Array.from(letterTiles).find(t => 
-                        t.dataset.letter === letter && t.style.display === 'none'
-                    );
-                    if (tile) {
-                        tile.style.display = 'block';
-                        slot.textContent = '';
-                        slot.dataset.filled = 'false';
-                        this.checkSpelling(puzzle, container);
+                if (slot.textContent && slot.textContent.trim() !== '') {
+                    const sourceTileIndex = slot.dataset.sourceTile;
+                    if (sourceTileIndex) {
+                        const sourceTile = letterTiles[parseInt(sourceTileIndex)];
+                        if (sourceTile) {
+                            sourceTile.style.display = 'block';
+                        }
                     }
+                    
+                    slot.textContent = '';
+                    slot.dataset.filled = 'false';
+                    slot.dataset.sourceTile = '';
+                    this.checkSpelling(puzzle, container);
                 }
             });
         });
@@ -1232,15 +1261,28 @@ class HalloweenPuzzles {
 
     checkSpelling(puzzle, container) {
         const letterSlots = container.querySelectorAll('.letter-slot');
+        const letterTiles = container.querySelectorAll('.letter-tile');
         const feedback = container.querySelector('.spelling-feedback');
-        const filledSlots = Array.from(letterSlots).filter(slot => slot.dataset.filled === 'true');
+        
+        // Count filled slots (slots with content)
+        const filledSlots = Array.from(letterSlots).filter(slot => 
+            slot.textContent && slot.textContent.trim() !== ''
+        );
         
         if (filledSlots.length === puzzle.letters.length) {
-            const userWord = Array.from(letterSlots).map(slot => slot.textContent).join('');
+            const userWord = Array.from(letterSlots).map(slot => 
+                slot.textContent || ''
+            ).join('');
             
             if (userWord === puzzle.word) {
                 feedback.innerHTML = `<div class="success">🎉 Perfect! You spelled "${puzzle.word}" correctly!</div>`;
-                letterSlots.forEach(slot => slot.classList.add('correct'));
+                letterSlots.forEach(slot => {
+                    if (slot.textContent) slot.classList.add('correct');
+                });
+                
+                // Disable further interactions
+                letterSlots.forEach(slot => slot.style.pointerEvents = 'none');
+                letterTiles.forEach(tile => tile.style.pointerEvents = 'none');
                 
                 setTimeout(() => {
                     const event = new CustomEvent('puzzleComplete', { 
@@ -1250,21 +1292,35 @@ class HalloweenPuzzles {
                 }, 1500);
             } else {
                 feedback.innerHTML = `<div class="error">❌ Not quite right. Try again!</div>`;
-                letterSlots.forEach(slot => slot.classList.add('incorrect'));
+                letterSlots.forEach(slot => {
+                    if (slot.textContent) slot.classList.add('incorrect');
+                });
                 
                 // Reset after a moment
                 setTimeout(() => {
                     letterSlots.forEach(slot => {
                         slot.classList.remove('incorrect');
+                        const sourceTileIndex = slot.dataset.sourceTile;
+                        if (sourceTileIndex) {
+                            const sourceTile = letterTiles[parseInt(sourceTileIndex)];
+                            if (sourceTile) {
+                                sourceTile.style.display = 'block';
+                            }
+                        }
                         slot.textContent = '';
                         slot.dataset.filled = 'false';
+                        slot.dataset.sourceTile = '';
                     });
                     
-                    const tiles = container.querySelectorAll('.letter-tile');
-                    tiles.forEach(tile => tile.style.display = 'block');
                     feedback.innerHTML = '';
                 }, 2000);
             }
+        } else {
+            // Clear any previous feedback if not all slots are filled
+            feedback.innerHTML = '';
+            letterSlots.forEach(slot => {
+                slot.classList.remove('correct', 'incorrect');
+            });
         }
     }
 
