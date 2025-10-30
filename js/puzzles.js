@@ -1803,6 +1803,13 @@ class HalloweenPuzzles {
             </div>
         `;
         
+        // Disable submit button since science puzzles handle completion automatically
+        const submitBtn = document.getElementById('submitAnswer');
+        if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.style.display = 'none'; // Hide the submit button for science puzzles
+        }
+        
         this.setupScienceListeners(puzzle, container);
     }
 

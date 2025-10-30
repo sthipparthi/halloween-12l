@@ -223,8 +223,8 @@ class HalloweenGame {
         // Play level start sound
         this.playSound('levelStart');
         
-        // Start character-specific background ambient sound
-        this.startCharacterAmbientSound(character.name);
+        // Character ambient sounds removed - they were annoying
+        // this.startCharacterAmbientSound(character.name);
         
         // Update UI
         document.getElementById('currentLevel').textContent = level;
