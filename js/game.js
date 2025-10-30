@@ -152,6 +152,20 @@ class HalloweenGame {
                 this.handleCorrectAnswer();
             }
         });
+        
+        // Set up event delegation for puzzle container to relay puzzleComplete events
+        const puzzleContainer = document.getElementById('puzzleContainer');
+        if (puzzleContainer) {
+            puzzleContainer.addEventListener('puzzleComplete', (e) => {
+                // Relay the event to document so game.js can catch it
+                const relayedEvent = new CustomEvent('puzzleComplete', {
+                    detail: e.detail,
+                    bubbles: true,
+                    cancelable: true
+                });
+                document.dispatchEvent(relayedEvent);
+            });
+        }
     }
 
     // Screen Management
