@@ -61,91 +61,91 @@ class HalloweenPuzzles {
             ]
         };
         
-        // Countries with flag images - HIGH QUALITY FLAGS
+        // Countries with flags and hints
         this.countries = {
             easy: [
-                { name: 'USA', flag: 'us.png', hint: 'Land of the free, home of the brave' },
-                { name: 'CANADA', flag: 'ca.png', hint: 'Known for maple syrup and hockey' },
-                { name: 'JAPAN', flag: 'jp.png', hint: 'Land of the rising sun' },
-                { name: 'FRANCE', flag: 'fr.png', hint: 'Famous for the Eiffel Tower' },
-                { name: 'ITALY', flag: 'it.png', hint: 'Boot-shaped country, famous for pizza' },
-                { name: 'CHINA', flag: 'cn.png', hint: 'Has the Great Wall' },
-                { name: 'SPAIN', flag: 'es.png', hint: 'Famous for flamenco dancing' },
-                { name: 'EGYPT', flag: 'eg.png', hint: 'Home to ancient pyramids' },
-                { name: 'BRAZIL', flag: 'br.png', hint: 'Largest country in South America' },
-                { name: 'INDIA', flag: 'in.png', hint: 'Home to the Taj Mahal' },
-                { name: 'GERMANY', flag: 'de.png', hint: 'Known for cars and Oktoberfest' },
-                { name: 'RUSSIA', flag: 'ru.png', hint: 'Largest country in the world' },
-                { name: 'MEXICO', flag: 'mx.png', hint: 'Famous for tacos and sombreros' },
-                { name: 'UNITED KINGDOM', flag: 'gb.png', hint: 'Island nation with Big Ben' },
-                { name: 'SOUTH KOREA', flag: 'kr.png', hint: 'Known for K-pop and kimchi' }
+                { name: 'USA', flag: '🇺🇸', hint: 'Land of the free, home of the brave' },
+                { name: 'CANADA', flag: '🇨🇦', hint: 'Known for maple syrup and hockey' },
+                { name: 'JAPAN', flag: '🇯🇵', hint: 'Land of the rising sun' },
+                { name: 'FRANCE', flag: '🇫🇷', hint: 'Famous for the Eiffel Tower' },
+                { name: 'ITALY', flag: '🇮🇹', hint: 'Boot-shaped country, famous for pizza' },
+                { name: 'CHINA', flag: '🇨🇳', hint: 'Has the Great Wall' },
+                { name: 'SPAIN', flag: '🇪🇸', hint: 'Famous for flamenco dancing' },
+                { name: 'EGYPT', flag: '🇪🇬', hint: 'Home to ancient pyramids' },
+                { name: 'BRAZIL', flag: '🇧🇷', hint: 'Largest country in South America' },
+                { name: 'INDIA', flag: '🇮🇳', hint: 'Home to the Taj Mahal' },
+                { name: 'GERMANY', flag: '🇩🇪', hint: 'Known for cars and Oktoberfest' },
+                { name: 'RUSSIA', flag: '🇷🇺', hint: 'Largest country in the world' },
+                { name: 'MEXICO', flag: '🇲🇽', hint: 'Famous for tacos and sombreros' },
+                { name: 'UNITED KINGDOM', flag: '🇬🇧', hint: 'Island nation with Big Ben' },
+                { name: 'SOUTH KOREA', flag: '🇰🇷', hint: 'Known for K-pop and kimchi' }
             ],
             medium: [
-                { name: 'AUSTRALIA', flag: 'au.png', hint: 'Home to kangaroos and koalas' },
-                { name: 'GREECE', flag: 'gr.png', hint: 'Birthplace of democracy and Olympics' },
-                { name: 'TURKEY', flag: 'tr.png', hint: 'Bridge between Europe and Asia' },
-                { name: 'THAILAND', flag: 'th.png', hint: 'Known for temples and spicy food' },
-                { name: 'ARGENTINA', flag: 'ar.png', hint: 'Famous for tango dancing' },
-                { name: 'POLAND', flag: 'pl.png', hint: 'Heart of Europe with medieval cities' },
-                { name: 'CHILE', flag: 'cl.png', hint: 'Long, narrow country along Pacific coast' },
-                { name: 'PERU', flag: 'pe.png', hint: 'Home to Machu Picchu and llamas' },
-                { name: 'COLOMBIA', flag: 'co.png', hint: 'Known for coffee and emeralds' },
-                { name: 'VIETNAM', flag: 'vn.png', hint: 'Famous for pho soup and motorcycles' },
-                { name: 'PHILIPPINES', flag: 'ph.png', hint: 'Island nation with over 7,000 islands' },
-                { name: 'MOROCCO', flag: 'ma.png', hint: 'Gateway to Africa with beautiful markets' },
-                { name: 'KENYA', flag: 'ke.png', hint: 'Home to safari animals and Maasai people' },
-                { name: 'NIGERIA', flag: 'ng.png', hint: 'Most populous country in Africa' },
-                { name: 'ISRAEL', flag: 'il.png', hint: 'Holy land with ancient history' },
-                { name: 'INDONESIA', flag: 'id.png', hint: 'Largest archipelago in the world' },
-                { name: 'MALAYSIA', flag: 'my.png', hint: 'Twin towers and tropical rainforests' },
-                { name: 'SINGAPORE', flag: 'sg.png', hint: 'Modern city-state in Southeast Asia' }
+                { name: 'AUSTRALIA', flag: '🇦🇺', hint: 'Home to kangaroos and koalas' },
+                { name: 'GREECE', flag: '�🇷', hint: 'Birthplace of democracy and Olympics' },
+                { name: 'TURKEY', flag: '🇹🇷', hint: 'Bridge between Europe and Asia' },
+                { name: 'THAILAND', flag: '��', hint: 'Known for temples and spicy food' },
+                { name: 'ARGENTINA', flag: '🇦🇷', hint: 'Famous for tango dancing' },
+                { name: 'POLAND', flag: '��', hint: 'Heart of Europe with medieval cities' },
+                { name: 'CHILE', flag: '��', hint: 'Long, narrow country along Pacific coast' },
+                { name: 'PERU', flag: '🇵🇪', hint: 'Home to Machu Picchu and llamas' },
+                { name: 'COLOMBIA', flag: '🇨🇴', hint: 'Known for coffee and emeralds' },
+                { name: 'VIETNAM', flag: '��', hint: 'Famous for pho soup and motorcycles' },
+                { name: 'PHILIPPINES', flag: '��', hint: 'Island nation with over 7,000 islands' },
+                { name: 'MOROCCO', flag: '🇲🇦', hint: 'Gateway to Africa with beautiful markets' },
+                { name: 'KENYA', flag: '��', hint: 'Home to safari animals and Maasai people' },
+                { name: 'NIGERIA', flag: '🇳🇬', hint: 'Most populous country in Africa' },
+                { name: 'ISRAEL', flag: '��', hint: 'Holy land with ancient history' },
+                { name: 'INDONESIA', flag: '🇮🇩', hint: 'Largest archipelago in the world' },
+                { name: 'MALAYSIA', flag: '��', hint: 'Twin towers and tropical rainforests' },
+                { name: 'SINGAPORE', flag: '🇸🇬', hint: 'Modern city-state in Southeast Asia' }
             ],
             hard: [
-                { name: 'SWITZERLAND', flag: 'ch.png', hint: 'Neutral country famous for chocolate' },
-                { name: 'NETHERLANDS', flag: 'nl.png', hint: 'Land of tulips and windmills' },
-                { name: 'NORWAY', flag: 'no.png', hint: 'Land of fjords and northern lights' },
-                { name: 'SWEDEN', flag: 'se.png', hint: 'Home to IKEA and meatballs' },
-                { name: 'PORTUGAL', flag: 'pt.png', hint: 'Famous for explorers and pastries' },
-                { name: 'IRELAND', flag: 'ie.png', hint: 'Emerald Isle with leprechauns' },
-                { name: 'SOUTH AFRICA', flag: 'za.png', hint: 'Rainbow Nation at tip of Africa' },
-                { name: 'NEW ZEALAND', flag: 'nz.png', hint: 'Island nation with hobbits and sheep' },
-                { name: 'FINLAND', flag: 'fi.png', hint: 'Land of saunas and Santa Claus' },
-                { name: 'DENMARK', flag: 'dk.png', hint: 'Home of LEGO and fairy tales' },
-                { name: 'BELGIUM', flag: 'be.png', hint: 'Famous for waffles and chocolate' },
-                { name: 'AUSTRIA', flag: 'at.png', hint: 'Land of Mozart and the Alps' },
-                { name: 'CZECH REPUBLIC', flag: 'cz.png', hint: 'Heart of Europe with Prague castle' },
-                { name: 'HUNGARY', flag: 'hu.png', hint: 'Known for thermal baths and goulash' },
-                { name: 'CROATIA', flag: 'hr.png', hint: 'Beautiful coastline on Adriatic Sea' },
-                { name: 'ROMANIA', flag: 'pt.png', hint: 'Home to Dracula legend and castles' },
-                { name: 'BULGARIA', flag: 'bg.png', hint: 'Land of roses and yogurt' },
-                { name: 'SERBIA', flag: 'rs.png', hint: 'Crossroads of Central and Balkan Europe' },
-                { name: 'SLOVENIA', flag: 'si.png', hint: 'Alpine country with emerald river' },
-                { name: 'SLOVAKIA', flag: 'sk.png', hint: 'Mountainous country in Central Europe' },
-                { name: 'ESTONIA', flag: 'ee.png', hint: 'Digital pioneer in Northern Europe' },
-                { name: 'LATVIA', flag: 'lv.png', hint: 'Baltic state with beautiful beaches' },
-                { name: 'LITHUANIA', flag: 'lt.png', hint: 'Southernmost Baltic state' },
-                { name: 'ICELAND', flag: 'is.png', hint: 'Land of fire and ice with geysers' },
-                { name: 'LUXEMBOURG', flag: 'lu.png', hint: 'Small wealthy country in Europe' },
-                { name: 'BANGLADESH', flag: 'bd.png', hint: 'Land of rivers and Bengal tigers' },
-                { name: 'PAKISTAN', flag: 'pk.png', hint: 'Land of the pure with high mountains' },
-                { name: 'NEPAL', flag: 'np.png', hint: 'Home to Mount Everest' },
-                { name: 'SRI LANKA', flag: 'lk.png', hint: 'Pearl of the Indian Ocean' },
-                { name: 'MYANMAR', flag: 'mm.png', hint: 'Land of golden pagodas' },
-                { name: 'CAMBODIA', flag: 'kh.png', hint: 'Home to ancient Angkor Wat' },
-                { name: 'LAOS', flag: 'la.png', hint: 'Landlocked country in Southeast Asia' },
-                { name: 'MONGOLIA', flag: 'mn.png', hint: 'Land of nomads and vast steppes' },
-                { name: 'KAZAKHSTAN', flag: 'kz.png', hint: 'Largest landlocked country' },
-                { name: 'UZBEKISTAN', flag: 'uz.png', hint: 'Heart of the Silk Road' },
-                { name: 'GEORGIA', flag: 'ge.png', hint: 'Crossroads of Europe and Asia' },
-                { name: 'ARMENIA', flag: 'am.png', hint: 'First Christian nation in the world' },
-                { name: 'AZERBAIJAN', flag: 'az.png', hint: 'Land of fire with oil reserves' },
-                { name: 'JORDAN', flag: 'jo.png', hint: 'Desert kingdom with Petra ruins' },
-                { name: 'LEBANON', flag: 'lb.png', hint: 'Cedar country in the Middle East' },
-                { name: 'UAE', flag: 'ae.png', hint: 'Modern desert oasis with tall buildings' },
-                { name: 'QATAR', flag: 'qa.png', hint: 'Rich peninsula nation' },
-                { name: 'SAUDI ARABIA', flag: 'sa.png', hint: 'Birthplace of Islam with vast deserts' },
-                { name: 'UKRAINE', flag: 'ua.png', hint: 'Largest country entirely in Europe' },
-                { name: 'BELARUS', flag: 'by.png', hint: 'Land of forests and lakes' }
+                { name: 'SWITZERLAND', flag: '🇨🇭', hint: 'Neutral country famous for chocolate' },
+                { name: 'NETHERLANDS', flag: '🇳🇱', hint: 'Land of tulips and windmills' },
+                { name: 'NORWAY', flag: '🇳🇴', hint: 'Land of fjords and northern lights' },
+                { name: 'SWEDEN', flag: '🇸🇪', hint: 'Home to IKEA and meatballs' },
+                { name: 'PORTUGAL', flag: '��', hint: 'Famous for explorers and pastries' },
+                { name: 'IRELAND', flag: '🇮🇪', hint: 'Emerald Isle with leprechauns' },
+                { name: 'SOUTH AFRICA', flag: '🇿🇦', hint: 'Rainbow Nation at tip of Africa' },
+                { name: 'NEW ZEALAND', flag: '🇳🇿', hint: 'Island nation with hobbits and sheep' },
+                { name: 'FINLAND', flag: '🇫�', hint: 'Land of saunas and Santa Claus' },
+                { name: 'DENMARK', flag: '🇩🇰', hint: 'Home of LEGO and fairy tales' },
+                { name: 'BELGIUM', flag: '🇧🇪', hint: 'Famous for waffles and chocolate' },
+                { name: 'AUSTRIA', flag: '🇦🇹', hint: 'Land of Mozart and the Alps' },
+                { name: 'CZECH REPUBLIC', flag: '🇨🇿', hint: 'Heart of Europe with Prague castle' },
+                { name: 'HUNGARY', flag: '🇭🇺', hint: 'Known for thermal baths and goulash' },
+                { name: 'CROATIA', flag: '🇭🇷', hint: 'Beautiful coastline on Adriatic Sea' },
+                { name: 'ROMANIA', flag: '��', hint: 'Home to Dracula legend and castles' },
+                { name: 'BULGARIA', flag: '🇧🇬', hint: 'Land of roses and yogurt' },
+                { name: 'SERBIA', flag: '🇷🇸', hint: 'Crossroads of Central and Balkan Europe' },
+                { name: 'SLOVENIA', flag: '🇸🇮', hint: 'Alpine country with emerald river' },
+                { name: 'SLOVAKIA', flag: '🇸🇰', hint: 'Mountainous country in Central Europe' },
+                { name: 'ESTONIA', flag: '🇪🇪', hint: 'Digital pioneer in Northern Europe' },
+                { name: 'LATVIA', flag: '🇱🇻', hint: 'Baltic state with beautiful beaches' },
+                { name: 'LITHUANIA', flag: '🇱🇹', hint: 'Southernmost Baltic state' },
+                { name: 'ICELAND', flag: '🇮�', hint: 'Land of fire and ice with geysers' },
+                { name: 'LUXEMBOURG', flag: '🇱🇺', hint: 'Small wealthy country in Europe' },
+                { name: 'BANGLADESH', flag: '🇧🇩', hint: 'Land of rivers and Bengal tigers' },
+                { name: 'PAKISTAN', flag: '🇵🇰', hint: 'Land of the pure with high mountains' },
+                { name: 'NEPAL', flag: '🇳🇵', hint: 'Home to Mount Everest' },
+                { name: 'SRI LANKA', flag: '🇱🇰', hint: 'Pearl of the Indian Ocean' },
+                { name: 'MYANMAR', flag: '🇲🇲', hint: 'Land of golden pagodas' },
+                { name: 'CAMBODIA', flag: '🇰🇭', hint: 'Home to ancient Angkor Wat' },
+                { name: 'LAOS', flag: '🇱🇦', hint: 'Landlocked country in Southeast Asia' },
+                { name: 'MONGOLIA', flag: '🇲🇳', hint: 'Land of nomads and vast steppes' },
+                { name: 'KAZAKHSTAN', flag: '�🇿', hint: 'Largest landlocked country' },
+                { name: 'UZBEKISTAN', flag: '🇺🇿', hint: 'Heart of the Silk Road' },
+                { name: 'GEORGIA', flag: '🇬🇪', hint: 'Crossroads of Europe and Asia' },
+                { name: 'ARMENIA', flag: '🇦🇲', hint: 'First Christian nation in the world' },
+                { name: 'AZERBAIJAN', flag: '🇦🇿', hint: 'Land of fire with oil reserves' },
+                { name: 'JORDAN', flag: '🇯🇴', hint: 'Desert kingdom with Petra ruins' },
+                { name: 'LEBANON', flag: '🇱🇧', hint: 'Cedar country in the Middle East' },
+                { name: 'UAE', flag: '🇦🇪', hint: 'Modern desert oasis with tall buildings' },
+                { name: 'QATAR', flag: '🇶🇦', hint: 'Rich peninsula nation' },
+                { name: 'SAUDI ARABIA', flag: '🇸🇦', hint: 'Birthplace of Islam with vast deserts' },
+                { name: 'UKRAINE', flag: '🇺🇦', hint: 'Largest country entirely in Europe' },
+                { name: 'BELARUS', flag: '🇧🇾', hint: 'Land of forests and lakes' }
             ]
         };
     }
@@ -811,19 +811,12 @@ class HalloweenPuzzles {
     }
 
     renderGeographyPuzzle(puzzle, container) {
-        const flagImagePath = puzzle.flag ? `images/flags/${puzzle.flag}` : 'images/flags/default.png';
-        
         container.innerHTML = `
             <div class="geography-container">
                 <h3>🌍 Which country does this flag belong to?</h3>
                 <div class="geography-game">
                     <div class="flag-display">
-                        <img src="${flagImagePath}" 
-                             alt="Flag of ${puzzle.country.name}" 
-                             class="country-flag"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-                        />
-                        <div class="flag-fallback" style="display: none; font-size: 8rem;">🏳️</div>
+                        <div class="country-flag">${puzzle.flag || '🏳️'}</div>
                         <div class="country-hint">${puzzle.hint}</div>
                     </div>
                     <div class="country-options">
@@ -1678,5 +1671,3 @@ class HalloweenPuzzles {
 
 // Export for use in other files
 window.HalloweenPuzzles = HalloweenPuzzles;
-
-
