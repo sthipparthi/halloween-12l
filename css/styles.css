@@ -1828,6 +1828,14 @@ body::after {
     animation: shake 0.5s ease-out;
 }
 
+.science-option.selected {
+    background: linear-gradient(45deg, #2196F3, #03A9F4);
+    border-color: #2196F3;
+    color: white;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+}
+
 .option-letter {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 50%;

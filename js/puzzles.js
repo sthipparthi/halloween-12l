@@ -117,7 +117,7 @@ class HalloweenPuzzles {
             ]
         };
         
-        // Organic table (periodic elements) puzzles for kids
+        // Periodic table elements puzzles for kids
         this.organicTablePuzzles = {
             easy: [
                 {
@@ -1777,7 +1777,12 @@ class HalloweenPuzzles {
 
     renderSciencePuzzle(puzzle, container) {
         const difficultyLabel = puzzle.difficulty.charAt(0).toUpperCase() + puzzle.difficulty.slice(1);
-        const typeLabel = puzzle.type.charAt(0).toUpperCase() + puzzle.type.slice(1);
+        let typeLabel = puzzle.type.charAt(0).toUpperCase() + puzzle.type.slice(1);
+        
+        // Special case for organicTable to display as "Periodic Table"
+        if (puzzle.type === 'organicTable') {
+            typeLabel = 'Periodic Table';
+        }
         
         container.innerHTML = `
             <div class="science-container">
@@ -1803,11 +1808,18 @@ class HalloweenPuzzles {
             </div>
         `;
         
-        // Disable submit button since science puzzles handle completion automatically
+        // Handle submit button for different science puzzle types
         const submitBtn = document.getElementById('submitAnswer');
         if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.style.display = 'none'; // Hide the submit button for science puzzles
+            if (puzzle.type === 'organicTable') {
+                // Keep submit button enabled for organic table puzzles
+                submitBtn.disabled = false;
+                submitBtn.style.display = 'block';
+            } else {
+                // Disable submit button for other science puzzles that handle completion automatically
+                submitBtn.disabled = true;
+                submitBtn.style.display = 'none';
+            }
         }
         
         this.setupScienceListeners(puzzle, container);
@@ -2446,7 +2458,7 @@ class HalloweenPuzzles {
         });
     }
 
-    // Event listeners for science puzzles (space, physics, chemistry)
+    // Event listeners for science puzzles (space, physics, chemistry, organicTable)
     setupScienceListeners(puzzle, container) {
         const options = container.querySelectorAll('.science-option');
         const feedback = container.querySelector('.science-feedback');
@@ -2455,10 +2467,21 @@ class HalloweenPuzzles {
             option.addEventListener('click', (e) => {
                 const isCorrect = option.dataset.correct === 'true';
                 
-                // Disable all options
-                options.forEach(opt => opt.disabled = true);
-                
-                if (isCorrect) {
+                if (puzzle.type === 'organicTable') {
+                    // For organic table puzzles, just mark selection and let submit button handle completion
+                    options.forEach(opt => {
+                        opt.classList.remove('selected');
+                        opt.disabled = false; // Keep options enabled so user can change selection
+                    });
+                    option.classList.add('selected');
+                    
+                    // Clear any previous feedback
+                    feedback.innerHTML = '';
+                } else {
+                    // For other science puzzles, disable all options and auto-complete
+                    options.forEach(opt => opt.disabled = true);
+                    
+                    if (isCorrect) {
                     this.playCorrectSound(); // Play success sound
                     option.classList.add('correct');
                     
@@ -2532,6 +2555,7 @@ class HalloweenPuzzles {
                         });
                         container.dispatchEvent(event);
                     }, 2500);
+                    }
                 }
             });
         });
@@ -2592,11 +2616,15 @@ class HalloweenPuzzles {
                     answer === puzzle.wordArray[puzzle.missingPositions[i]]
                 );
                 
+            case 'organicTable':
+                // Check if user has selected the correct answer for organic table
+                const selectedOption = document.querySelector('.science-option.selected');
+                return selectedOption && selectedOption.dataset.correct === 'true';
+                
             case 'space':
             case 'physics':
             case 'chemistry':
-            case 'organicTable':
-                // Science puzzles are completed through event listeners
+                // These science puzzles are completed through event listeners
                 return false;
                 
             default:
