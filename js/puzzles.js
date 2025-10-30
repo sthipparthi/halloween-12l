@@ -2274,48 +2274,72 @@ class HalloweenPuzzles {
     setupMathListeners(puzzle, container, type) {
         const mathInput = container.querySelector('.math-input');
         const feedback = container.querySelector('.math-feedback');
+        let hasAnswered = false; // Prevent multiple submissions
         
-        mathInput.addEventListener('input', () => {
-            const userAnswer = parseInt(mathInput.value);
-            const currentProblem = puzzle.problems[puzzle.currentProblem];
-            
-            if (!isNaN(userAnswer) && mathInput.value.trim() !== '') {
-                if (userAnswer === currentProblem.answer) {
-                    feedback.innerHTML = `<div class="success">🎉 Correct! ${currentProblem.num1} ${type === 'addition' ? '+' : '-'} ${currentProblem.num2} = ${currentProblem.answer}</div>`;
-                    mathInput.disabled = true;
-                    mathInput.classList.add('correct');
-                    
-                    // Move to next problem or complete puzzle
-                    setTimeout(() => {
-                        puzzle.currentProblem++;
-                        if (puzzle.currentProblem < puzzle.problems.length) {
-                            this.renderPuzzle(puzzle, container);
-                        } else {
-                            const event = new CustomEvent('puzzleComplete', { 
-                                detail: { puzzle: puzzle, success: true } 
-                            });
-                            container.dispatchEvent(event);
+        // Remove any existing event listeners by cloning the element
+        const newMathInput = mathInput.cloneNode(true);
+        mathInput.parentNode.replaceChild(newMathInput, mathInput);
+        
+        // Add focus to the new input
+        newMathInput.focus();
+        
+        // Handle input changes with debouncing
+        let inputTimer;
+        newMathInput.addEventListener('input', () => {
+            clearTimeout(inputTimer);
+            inputTimer = setTimeout(() => {
+                if (hasAnswered) return; // Prevent multiple submissions
+                
+                const userAnswer = parseInt(newMathInput.value);
+                const currentProblem = puzzle.problems[puzzle.currentProblem];
+                
+                if (!isNaN(userAnswer) && newMathInput.value.trim() !== '') {
+                    if (userAnswer === currentProblem.answer) {
+                        hasAnswered = true; // Mark as answered
+                        feedback.innerHTML = `<div class="success">🎉 Correct! ${currentProblem.num1} ${type === 'addition' ? '+' : '-'} ${currentProblem.num2} = ${currentProblem.answer}</div>`;
+                        newMathInput.disabled = true;
+                        newMathInput.classList.add('correct');
+                        
+                        // Move to next problem or complete puzzle
+                        setTimeout(() => {
+                            puzzle.currentProblem++;
+                            if (puzzle.currentProblem < puzzle.problems.length) {
+                                this.renderPuzzle(puzzle, container);
+                            } else {
+                                const event = new CustomEvent('puzzleComplete', { 
+                                    detail: { puzzle: puzzle, success: true } 
+                                });
+                                container.dispatchEvent(event);
+                            }
+                        }, 2000);
+                    } else {
+                        // Only show hints for significantly wrong answers
+                        if (Math.abs(userAnswer - currentProblem.answer) > 5) {
+                            feedback.innerHTML = `<div class="error">❌ That seems too ${userAnswer > currentProblem.answer ? 'high' : 'low'}. Try again!</div>`;
+                        } else if (userAnswer !== currentProblem.answer) {
+                            feedback.innerHTML = `<div class="error">❌ Not quite right. Try again!</div>`;
                         }
-                    }, 2000);
-                } else {
-                    // Only show hints for significantly wrong answers
-                    if (Math.abs(userAnswer - currentProblem.answer) > 5) {
-                        feedback.innerHTML = `<div class="error">❌ That seems too ${userAnswer > currentProblem.answer ? 'high' : 'low'}. Try again!</div>`;
-                    } else if (userAnswer !== currentProblem.answer) {
-                        feedback.innerHTML = `<div class="error">❌ Not quite right. Try again!</div>`;
+                        newMathInput.classList.add('incorrect');
+                        
+                        // Remove incorrect class after a moment
+                        setTimeout(() => {
+                            newMathInput.classList.remove('incorrect');
+                            feedback.innerHTML = '';
+                        }, 1500);
                     }
-                    mathInput.classList.add('incorrect');
-                    
-                    // Remove incorrect class after a moment
-                    setTimeout(() => {
-                        mathInput.classList.remove('incorrect');
-                        feedback.innerHTML = '';
-                    }, 1500);
+                } else {
+                    // Clear feedback when input is empty or invalid
+                    feedback.innerHTML = '';
+                    newMathInput.classList.remove('correct', 'incorrect');
                 }
-            } else {
-                // Clear feedback when input is empty or invalid
-                feedback.innerHTML = '';
-                mathInput.classList.remove('correct', 'incorrect');
+            }, 300); // 300ms debounce delay
+        });
+        
+        // Also handle Enter key press
+        newMathInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !hasAnswered) {
+                e.preventDefault();
+                newMathInput.dispatchEvent(new Event('input'));
             }
         });
     }
