@@ -1332,10 +1332,11 @@ class HalloweenPuzzles {
             const userAnswer = parseInt(mathInput.value);
             const currentProblem = puzzle.problems[puzzle.currentProblem];
             
-            if (!isNaN(userAnswer)) {
+            if (!isNaN(userAnswer) && mathInput.value.trim() !== '') {
                 if (userAnswer === currentProblem.answer) {
                     feedback.innerHTML = `<div class="success">🎉 Correct! ${currentProblem.num1} ${type === 'addition' ? '+' : '-'} ${currentProblem.num2} = ${currentProblem.answer}</div>`;
                     mathInput.disabled = true;
+                    mathInput.classList.add('correct');
                     
                     // Move to next problem or complete puzzle
                     setTimeout(() => {
@@ -1349,9 +1350,25 @@ class HalloweenPuzzles {
                             container.dispatchEvent(event);
                         }
                     }, 2000);
-                } else if (userAnswer > currentProblem.answer + 10 || userAnswer < 0) {
-                    feedback.innerHTML = `<div class="error">❌ That seems too ${userAnswer > currentProblem.answer ? 'high' : 'low'}. Try again!</div>`;
+                } else {
+                    // Only show hints for significantly wrong answers
+                    if (Math.abs(userAnswer - currentProblem.answer) > 5) {
+                        feedback.innerHTML = `<div class="error">❌ That seems too ${userAnswer > currentProblem.answer ? 'high' : 'low'}. Try again!</div>`;
+                    } else if (userAnswer !== currentProblem.answer) {
+                        feedback.innerHTML = `<div class="error">❌ Not quite right. Try again!</div>`;
+                    }
+                    mathInput.classList.add('incorrect');
+                    
+                    // Remove incorrect class after a moment
+                    setTimeout(() => {
+                        mathInput.classList.remove('incorrect');
+                        feedback.innerHTML = '';
+                    }, 1500);
                 }
+            } else {
+                // Clear feedback when input is empty or invalid
+                feedback.innerHTML = '';
+                mathInput.classList.remove('correct', 'incorrect');
             }
         });
     }
