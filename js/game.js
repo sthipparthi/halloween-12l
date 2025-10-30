@@ -145,6 +145,13 @@ class HalloweenGame {
                 });
             }
         });
+
+        // Listen for puzzle complete events (for science puzzles and other auto-completing puzzles)
+        document.addEventListener('puzzleComplete', (e) => {
+            if (e.detail && e.detail.success) {
+                this.handleCorrectAnswer();
+            }
+        });
     }
 
     // Screen Management
